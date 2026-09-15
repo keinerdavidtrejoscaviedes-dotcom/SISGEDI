@@ -8,6 +8,7 @@ Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
 
     // ── Públicas (sin sesión requerida) ──────────────────────
     Route::get('/',        [DocumentoController::class,  'index'])->name('index');
+    Route::get('/login',   [AuthSisgediController::class, 'showLoginForm'])->name('login');
     Route::post('/login',  [AuthSisgediController::class, 'login'])->name('login.post');
     Route::post('/logout', [AuthSisgediController::class, 'logout'])->name('logout');
 
@@ -20,4 +21,9 @@ Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
     Route::get('/elementos/{id}/edit', [DocumentoController::class, 'edit'])->name('edit');
     Route::put('/elementos/{id}',      [DocumentoController::class, 'update'])->name('update');
     Route::delete('/elementos/{id}',   [DocumentoController::class, 'destroy'])->name('destroy');
+
+    // ── Vistas Específicas por Rol ───────────────────────────
+    Route::get('/gerente-comercial', function () {
+        return view('sisgedi::gerente_comercial.dashboard');
+    })->name('gerente_comercial.dashboard');
 });

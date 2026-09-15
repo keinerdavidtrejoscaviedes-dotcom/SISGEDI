@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Session;
 class AuthSisgediController extends Controller
 {
     /**
+     * Muestra el formulario de inicio de sesión (Vista).
+     */
+    public function showLoginForm()
+    {
+        return redirect()->route('sisgedi.index');
+    }
+
+    /**
      * Procesa el inicio de sesión contra users_sisgedi.
      * La tabla almacena la contraseña en texto plano (varchar 50),
      * por lo que se compara directamente sin bcrypt.
@@ -60,8 +68,17 @@ class AuthSisgediController extends Controller
             'id_rol' => $usuario->id_rol,
         ]);
 
-        return redirect()->route('sisgedi.dashboard')
-            ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
+        // Redirección dinámica basada en los 25 roles
+        switch ($usuario->id_rol) {
+            case 4: // Gerente Comercial
+                return redirect()->route('sisgedi.gerente_comercial.dashboard')
+                    ->with('success', '¡Bienvenido Gerente Comercial, ' . $usuario->nombre . '!');
+            // Otros roles irán aquí...
+            default:
+                // Cualquier otro rol va al panel original
+                return redirect()->route('sisgedi.dashboard')
+                    ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
+        }
     }
 
     /**
