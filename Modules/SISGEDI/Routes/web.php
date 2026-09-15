@@ -2,16 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\SISGEDI\Http\Controllers\DocumentoController;
+use Modules\SISGEDI\Http\Controllers\GerenteComercialController;
 use Modules\SISGEDI\Http\Controllers\AuthSisgediController;
-use Modules\SISGEDI\Http\Controllers\ConvocatoriaController;
-use Modules\SISGEDI\Http\Controllers\PostulacionController;
-use Modules\SISGEDI\Http\Controllers\FaseController;
-use Modules\SISGEDI\Http\Controllers\EntrevistaController;
 
 Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
 
+    Route::prefix('comercial')->name('comercial.')->group(function () {
+        Route::get('/producto', [GerenteComercialController::class, 'portafolioProducto'])->name('producto');
+        Route::post('/producto', [GerenteComercialController::class, 'storeProducto'])->name('producto.store');
+        Route::put('/producto/{id}', [GerenteComercialController::class, 'updateProducto'])->name('producto.update');
+        Route::delete('/producto/{id}', [GerenteComercialController::class, 'destroyProducto'])->name('producto.destroy');
+        Route::get('/dashboard', [GerenteComercialController::class, 'dasboardComercial'])->name('dashboard');
+    });
+
     // ── Públicas ──────────────────────────────────────────────────
     Route::get('/',        [DocumentoController::class,  'index'])->name('index');
+    Route::get('/login',   [AuthSisgediController::class, 'showLoginForm'])->name('login');
     Route::post('/login',  [AuthSisgediController::class, 'login'])->name('login.post');
     Route::post('/logout', [AuthSisgediController::class, 'logout'])->name('logout');
 

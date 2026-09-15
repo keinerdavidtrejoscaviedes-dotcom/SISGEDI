@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Session;
 class AuthSisgediController extends Controller
 {
     /**
+     * Muestra el formulario de inicio de sesión (Vista).
+     */
+    public function showLoginForm()
+    {
+        return redirect()->route('sisgedi.index');
+    }
+
+    /**
      * Procesa el inicio de sesión contra users_sisgedi.
      * La tabla almacena la contraseña en texto plano (varchar 50).
      */
@@ -68,6 +76,13 @@ class AuthSisgediController extends Controller
                 ->with('success', '¡Bienvenido(a), ' . $usuario->nombre . '!');
         }
 
+        // Si es Gerente Comercial (rol 4), llevarlo directamente a su módulo específico
+        if ($usuario->id_rol == 4) {
+            return redirect()->route('sisgedi.comercial.dashboard')
+                ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
+        }
+
+        // Para otros roles, llevarlos al dashboard general
         return redirect()->route('sisgedi.dashboard')
             ->with('success', '¡Bienvenida, ' . $usuario->nombre . '!');
     }
