@@ -4,65 +4,192 @@ namespace Modules\SISGEDI\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\SISGEDI\Entities\ProductoPortafolio;
+use Modules\SISGEDI\Entities\CategoriaPortafolio;
+use Modules\SISGEDI\Entities\AliadoComercial;
 
 class GerenteComercialController extends Controller
 {
-    public function portafolioProducto()
-    {
-        return view('sisgedi::gerente_comercial.productos.producto');
-        
-    }
-
     public function dasboardComercial()
     {
         return view('sisgedi::gerente_comercial.dashboard');
-        
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function portafolioProducto()
     {
-        return view('sisgedi::index');
+        // Cargar productos con sus relaciones
+        $productosRaw = ProductoPortafolio::with(['categoria', 'aliado'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Formatear al JSON exacto que espera Alpine.js en la vista
+        $productos = $productosRaw->map(function($p) {
+            return [
+                'id' => $p->producto_id,
+                'nombre' => $p->nombre,
+                'categoria' => $p->categoria ? $p->categoria->nombre : 'Sin categoría',
+                'precio' => (float)$p->precio,
+                'descripcion' => $p->descripcion,
+                'origen' => $p->aliado_id ? $this->getOrigenString($p->aliado->tipo) : 'Producción propia',
+                'aliado' => $p->aliado ? $p->aliado->nombre : '',
+                'estado' => ucfirst($p->estado) // Activo, Inactivo
+            ];
+        });
+
+        $categorias = CategoriaPortafolio::where('estado', 'activa')->get();
+
+        return view('sisgedi::gerente_comercial.productos.producto', compact('productos', 'categorias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function storeProducto(Request $request)
     {
-        return view('sisgedi::create');
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'categoria' => 'required|string',
+            'precio' => 'required|numeric|min:0',
+            'origen' => 'required|string',
+        ]);
+
+        $userId = session('sisgedi_user')['id_users'] ?? 1; // Fallback temporal
+
+        // 1. Obtener o crear Categoría
+        $categoria = CategoriaPortafolio::firstOrCreate(
+            ['nombre' => $request->categoria],
+            ['estado' => 'activa']
+        );
+
+        // 2. Obtener o crear Aliado si aplica
+        $aliadoId = null;
+        if ($request->origen !== 'Producción propia' && !empty($request->aliado)) {
+            $tipoDB = $this->getTipoAliadoDB($request->origen);
+            
+            $aliado = AliadoComercial::firstOrCreate(
+                ['nombre' => $request->aliado],
+                [
+                    'tipo' => $tipoDB,
+                    'datos_contacto' => 'Sin datos',
+                    'estado' => 'aprobado',
+                    'registrado_por' => $userId
+                ]
+            );
+            $aliadoId = $aliado->aliado_id;
+        }
+
+        // 3. Crear el Producto
+        $producto = ProductoPortafolio::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
+            'categoria_portafolio_id' => $categoria->categoria_portafolio_id,
+            'aliado_id' => $aliadoId,
+            'estado' => strtolower($request->estado ?? 'activo'),
+            'registrado_por' => $userId
+        ]);
+
+        // Retornar en el formato de Alpine.js
+        return response()->json([
+            'success' => true,
+            'producto' => [
+                'id' => $producto->producto_id,
+                'nombre' => $producto->nombre,
+                'categoria' => $categoria->nombre,
+                'precio' => (float)$producto->precio,
+                'descripcion' => $producto->descripcion,
+                'origen' => $request->origen,
+                'aliado' => $request->aliado,
+                'estado' => ucfirst($producto->estado)
+            ]
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function updateProducto(Request $request, $id)
     {
-        return view('sisgedi::show');
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'categoria' => 'required|string',
+            'precio' => 'required|numeric|min:0',
+            'origen' => 'required|string',
+        ]);
+
+        $producto = ProductoPortafolio::findOrFail($id);
+        $userId = session('sisgedi_user')['id_users'] ?? 1;
+
+        // Categoría
+        $categoria = CategoriaPortafolio::firstOrCreate(
+            ['nombre' => $request->categoria],
+            ['estado' => 'activa']
+        );
+
+        // Aliado
+        $aliadoId = null;
+        if ($request->origen !== 'Producción propia' && !empty($request->aliado)) {
+            $tipoDB = $this->getTipoAliadoDB($request->origen);
+            $aliado = AliadoComercial::firstOrCreate(
+                ['nombre' => $request->aliado],
+                [
+                    'tipo' => $tipoDB,
+                    'datos_contacto' => 'Sin datos',
+                    'estado' => 'aprobado',
+                    'registrado_por' => $userId
+                ]
+            );
+            $aliadoId = $aliado->aliado_id;
+        }
+
+        // Actualizar
+        $producto->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
+            'categoria_portafolio_id' => $categoria->categoria_portafolio_id,
+            'aliado_id' => $aliadoId,
+            'estado' => strtolower($request->estado ?? 'activo'),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'producto' => [
+                'id' => $producto->producto_id,
+                'nombre' => $producto->nombre,
+                'categoria' => $categoria->nombre,
+                'precio' => (float)$producto->precio,
+                'descripcion' => $producto->descripcion,
+                'origen' => $request->origen,
+                'aliado' => $request->aliado,
+                'estado' => ucfirst($producto->estado)
+            ]
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function destroyProducto($id)
     {
-        return view('sisgedi::edit');
+        $producto = ProductoPortafolio::findOrFail($id);
+        $producto->update(['estado' => 'inactivo']);
+
+        return response()->json(['success' => true]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
+    // --- Funciones auxiliares para mapear ENUMS ---
+    
+    private function getOrigenString($tipoEnum)
+    {
+        $map = [
+            'emprendedor' => 'Emprendedor',
+            'egresado' => 'Egresado',
+            'asociacion_campesina' => 'Asociación campesina',
+            'talento_sena' => 'Talento SENA'
+        ];
+        return $map[$tipoEnum] ?? 'Otro';
+    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
+    private function getTipoAliadoDB($origenString)
+    {
+        $map = [
+            'Emprendedor' => 'emprendedor',
+            'Egresado' => 'egresado',
+            'Asociación campesina' => 'asociacion_campesina',
+            'Talento SENA' => 'talento_sena'
+        ];
+        return $map[$origenString] ?? 'otro';
+    }
 }
