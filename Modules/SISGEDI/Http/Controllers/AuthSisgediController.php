@@ -3,9 +3,13 @@
 namespace Modules\SISGEDI\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Modules\SISGEDI\Entities\Fase;
+use Modules\SISGEDI\Entities\UsuarioRol;
 
 class AuthSisgediController extends Controller
 {
@@ -51,7 +55,7 @@ class AuthSisgediController extends Controller
             ->where('id_rol', $usuario->id_rol)
             ->value('nombre');
 
-        // Guardar sesión propia de SISGEDI (NO toca Auth de Laravel)
+        // Guardar sesión propia de SISGEDI (compatibilidad con lo ya existente)
         Session::put('sisgedi_user', [
             'id'     => $usuario->id_users,
             'nombre' => $usuario->nombre,
@@ -60,7 +64,29 @@ class AuthSisgediController extends Controller
             'id_rol' => $usuario->id_rol,
         ]);
 
-        return redirect()->route('sisgedi.dashboard')
+        // Puente al Auth central del ERP: el nickname en users_sisgedi coincide
+        // con el de la cuenta central creada para el mismo organigrama, asi
+        // que iniciar sesion aqui tambien autentica en el sistema completo y
+        // permite llegar directo al panel que corresponda segun el rol activo.
+        $destino = route('sisgedi.dashboard');
+
+        $usuarioCentral = User::where('nickname', $usuario->nombre)->first();
+
+        if ($usuarioCentral) {
+            Auth::login($usuarioCentral);
+            $request->session()->regenerate();
+
+            $fase = Fase::vigente();
+            $rolGerenteActivo = $fase
+                ? UsuarioRol::activaPara($usuarioCentral->id, 'GerenteAdministrativo', $fase->id)
+                : null;
+
+            if ($rolGerenteActivo) {
+                $destino = route('sisgedi.gerente.dashboard');
+            }
+        }
+
+        return redirect($destino)
             ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
     }
 
@@ -70,6 +96,12 @@ class AuthSisgediController extends Controller
     public function logout(Request $request)
     {
         Session::forget('sisgedi_user');
+
+        if (Auth::check()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
         return redirect()->route('sisgedi.index')
             ->with('success', 'Sesión cerrada correctamente.');
