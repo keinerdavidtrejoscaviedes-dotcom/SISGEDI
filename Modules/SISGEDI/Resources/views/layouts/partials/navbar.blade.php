@@ -60,6 +60,13 @@
                     </div>
                 </div>
 
+                @auth
+                <a href="{{ route('sisgedi.gerente.dashboard') }}"
+                   class="nav-link-top {{ Route::is('sisgedi.gerente.*') ? 'nav-active' : '' }}">
+                    <i class="fas fa-code-branch text-xs"></i> Panel Gerente
+                </a>
+                @endauth
+
                 <a href="{{ route('home') }}" class="nav-link-top">
                     <i class="fas fa-th-large text-xs"></i> SICEFA
                 </a>

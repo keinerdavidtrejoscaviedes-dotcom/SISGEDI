@@ -3,9 +3,13 @@
 namespace Modules\SISGEDI\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Modules\SISGEDI\Entities\Fase;
+use Modules\SISGEDI\Entities\UsuarioRol;
 
 class AuthSisgediController extends Controller
 {
@@ -58,33 +62,17 @@ class AuthSisgediController extends Controller
             ->where('id_rol', $usuario->id_rol)
             ->value('nombre');
 
-        // Guardar sesión propia de SISGEDI (NO toca Auth de Laravel)
+        // Guardar sesión propia de SISGEDI (compatibilidad con lo ya existente)
         Session::put('sisgedi_user', [
-            'id'           => $usuario->id_users,
-            'id_users'     => $usuario->id_users, // clave explícita para consultas de evaluador
-            'id_sisgedi'   => $usuario->id_users,
-            'nombre'       => $usuario->nombre,
-            'correo'       => $usuario->correo,
-            'rol'          => $rol ?? 'Sin rol',
-            'id_rol'       => $usuario->id_rol,
-            'es_admin'     => ($rol === 'Administrador'),
+            'id'     => $usuario->id_users,
+            'nombre' => $usuario->nombre,
+            'correo' => $usuario->correo,
+            'rol'    => $rol ?? 'Sin rol',
+            'id_rol' => $usuario->id_rol,
         ]);
 
-        // Aprendiz → su panel de convocatorias
-        if (strtolower($rol ?? '') === 'aprendiz') {
-            return redirect()->route('sisgedi.aprendiz.panel')
-                ->with('success', '¡Bienvenido(a), ' . $usuario->nombre . '!');
-        }
-
-        // Si es Gerente Comercial (rol 4), llevarlo directamente a su módulo específico
-        if ($usuario->id_rol == 4) {
-            return redirect()->route('sisgedi.comercial.dashboard')
-                ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
-        }
-
-        // Para otros roles, llevarlos al dashboard general
         return redirect()->route('sisgedi.dashboard')
-            ->with('success', '¡Bienvenida, ' . $usuario->nombre . '!');
+            ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
     }
 
     /**
@@ -93,6 +81,12 @@ class AuthSisgediController extends Controller
     public function logout(Request $request)
     {
         Session::forget('sisgedi_user');
+
+        if (Auth::check()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
         return redirect()->route('sisgedi.index')
             ->with('success', 'Sesión cerrada correctamente.');
