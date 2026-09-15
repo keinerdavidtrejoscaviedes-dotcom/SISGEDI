@@ -241,7 +241,11 @@
                         </div>
                     @endif
 
+<<<<<<< HEAD
                     <form action="{{ route('login.post') }}" method="POST" id="formLoginPrincipal">
+=======
+                    <form action="{{ route('login.post') }}" method="POST">
+>>>>>>> origin/maicolbc
                         @csrf
                         <input type="hidden" name="redirect" value="{{ old('redirect', $redirect ?? request('redirect')) }}">
 
@@ -287,9 +291,12 @@
                             <span class="badge bg-dark text-white cursor-pointer px-2 py-1 me-1" style="cursor: pointer;" onclick="fillDemo('damendez', '12345678')">
                                 Usuario: <code>damendez</code> (SuperAdmin / Director)
                             </span>
+<<<<<<< HEAD
                             <span class="badge text-white px-2 py-1" style="cursor: pointer; background: #1a2e1a; border: 1px solid #39A900;" onclick="fillDemo('yina', '12345678')">
                                 Usuario: <code style="color: #ff6b6b;">yina</code> (Administrador)
                             </span>
+=======
+>>>>>>> origin/maicolbc
                         </div>
                     </form>
                 </div>
@@ -316,6 +323,7 @@
         });
 
         function fillDemo(username, password) {
+<<<<<<< HEAD
             const campoEmail = document.getElementById('email');
             const campoPass  = document.getElementById('password');
             const form       = document.getElementById('formLoginPrincipal');
@@ -328,6 +336,10 @@
             campoPass.dispatchEvent(new Event('input', { bubbles: true }));
 
             setTimeout(function () { form.submit(); }, 200);
+=======
+            document.getElementById('email').value = username;
+            document.getElementById('password').value = password;
+>>>>>>> origin/maicolbc
         }
     </script>
 </body>
