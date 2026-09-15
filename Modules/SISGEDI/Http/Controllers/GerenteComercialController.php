@@ -48,6 +48,8 @@ class GerenteComercialController extends Controller
             'categoria' => 'required|string',
             'precio' => 'required|numeric|min:0',
             'origen' => 'required|string',
+            'descripcion' => 'nullable|string',
+            'estado' => 'nullable|string',
         ]);
 
         $userId = session('sisgedi_user')['id_users'] ?? 1; // Fallback temporal
@@ -109,6 +111,8 @@ class GerenteComercialController extends Controller
             'categoria' => 'required|string',
             'precio' => 'required|numeric|min:0',
             'origen' => 'required|string',
+            'descripcion' => 'nullable|string',
+            'estado' => 'nullable|string',
         ]);
 
         $producto = ProductoPortafolio::findOrFail($id);

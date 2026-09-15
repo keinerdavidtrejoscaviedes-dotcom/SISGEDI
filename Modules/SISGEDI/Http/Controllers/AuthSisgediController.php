@@ -68,6 +68,13 @@ class AuthSisgediController extends Controller
             'id_rol' => $usuario->id_rol,
         ]);
 
+        // Si es Gerente Comercial (rol 4), llevarlo directamente a su módulo específico
+        if ($usuario->id_rol == 4) {
+            return redirect()->route('sisgedi.comercial.dashboard')
+                ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
+        }
+
+        // Para otros roles, llevarlos al dashboard general
         return redirect()->route('sisgedi.dashboard')
             ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
     }

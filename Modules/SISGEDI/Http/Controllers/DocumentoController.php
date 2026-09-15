@@ -30,9 +30,9 @@ class DocumentoController extends Controller
             return redirect()->route('sisgedi.login');
         }
 
-        // Retornar vista específica basada en el id_rol
+        // Retornar vista específica o redireccionar basado en el id_rol
         if ($usuario['id_rol'] == 4) {
-            return view('sisgedi::gerente_comercial.dashboard');
+            return redirect()->route('sisgedi.comercial.dashboard');
         }
 
         // Dashboard por defecto (general)

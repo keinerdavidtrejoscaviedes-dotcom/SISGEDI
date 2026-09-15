@@ -192,14 +192,17 @@
                                         <h4 class="text-sm font-bold text-slate-800">Estado del producto</h4>
                                         <p class="text-xs text-slate-500 mt-0.5">Los productos inactivos se ocultarán del catálogo comercial.</p>
                                     </div>
-                                    <button type="button" 
-                                            @click="form.estado = form.estado === 'Activo' ? 'Inactivo' : 'Activo'"
-                                            class="relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-300 ease-in-out focus:outline-none shadow-inner"
-                                            :class="form.estado === 'Activo' ? 'bg-[#39A900]' : 'bg-slate-300'">
-                                        <span class="sr-only">Cambiar estado</span>
-                                        <span class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-300 ease-in-out"
-                                              :class="form.estado === 'Activo' ? 'translate-x-5' : 'translate-x-0'"></span>
-                                    </button>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-sm font-bold" :class="form.estado === 'Activo' ? 'text-[#39A900]' : 'text-slate-500'" x-text="form.estado"></span>
+                                        <button type="button" 
+                                                @click="form.estado = form.estado === 'Activo' ? 'Inactivo' : 'Activo'"
+                                                class="relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-300 ease-in-out focus:outline-none shadow-inner"
+                                                :class="form.estado === 'Activo' ? 'bg-[#39A900]' : 'bg-slate-300'">
+                                            <span class="sr-only">Cambiar estado</span>
+                                            <span class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-300 ease-in-out"
+                                                  :class="form.estado === 'Activo' ? 'translate-x-5' : 'translate-x-0'"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
