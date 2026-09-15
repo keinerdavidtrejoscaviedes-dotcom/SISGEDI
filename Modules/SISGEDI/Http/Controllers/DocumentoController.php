@@ -21,14 +21,21 @@ class DocumentoController extends Controller
         ));
     }
 
-    // 2. DASHBOARD (requiere sesión sisgedi_user)
+    // 2. DASHBOARD / LISTADO PRINCIPAL (Requiere sesión de SISGEDI)
     public function dashboard()
     {
-        if (! session('sisgedi_user')) {
-            return redirect()->route('sisgedi.index')
-                ->withErrors(['nickname' => 'Debes iniciar sesión para acceder.']);
+        $usuario = session('sisgedi_user');
+
+        if (!$usuario) {
+            return redirect()->route('sisgedi.login');
         }
 
+        // Retornar vista específica basada en el id_rol
+        if ($usuario['id_rol'] == 4) {
+            return view('sisgedi::gerente_comercial.dashboard');
+        }
+
+        // Dashboard por defecto (general)
         $totalDocumentos   = Documento::count();
         $documentosActivos = Documento::where('estado', 'Activo')->count();
         $documentosRecientes = Documento::where('created_at', '>=', now()->subDays(30))->count();

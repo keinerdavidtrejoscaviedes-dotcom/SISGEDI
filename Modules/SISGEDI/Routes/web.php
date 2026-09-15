@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\SISGEDI\Http\Controllers\DocumentoController;
 use Modules\SISGEDI\Http\Controllers\AuthSisgediController;
 
+
 Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
 
     // ── Públicas (sin sesión requerida) ──────────────────────
@@ -21,9 +22,4 @@ Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
     Route::get('/elementos/{id}/edit', [DocumentoController::class, 'edit'])->name('edit');
     Route::put('/elementos/{id}',      [DocumentoController::class, 'update'])->name('update');
     Route::delete('/elementos/{id}',   [DocumentoController::class, 'destroy'])->name('destroy');
-
-    // ── Vistas Específicas por Rol ───────────────────────────
-    Route::get('/gerente-comercial', function () {
-        return view('sisgedi::gerente_comercial.dashboard');
-    })->name('gerente_comercial.dashboard');
 });

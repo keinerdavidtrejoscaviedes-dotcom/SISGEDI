@@ -68,17 +68,8 @@ class AuthSisgediController extends Controller
             'id_rol' => $usuario->id_rol,
         ]);
 
-        // Redirección dinámica basada en los 25 roles
-        switch ($usuario->id_rol) {
-            case 4: // Gerente Comercial
-                return redirect()->route('sisgedi.gerente_comercial.dashboard')
-                    ->with('success', '¡Bienvenido Gerente Comercial, ' . $usuario->nombre . '!');
-            // Otros roles irán aquí...
-            default:
-                // Cualquier otro rol va al panel original
-                return redirect()->route('sisgedi.dashboard')
-                    ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
-        }
+        return redirect()->route('sisgedi.dashboard')
+            ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
     }
 
     /**

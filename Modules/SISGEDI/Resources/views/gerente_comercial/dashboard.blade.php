@@ -1,4 +1,4 @@
-@extends('sisgedi::layouts.landing')
+@extends('sisgedi::layouts.partials.sidebarcomercial')
 
 @section('content')
 <section class="py-16 bg-white" style="min-height: 500px;">
