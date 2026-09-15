@@ -27,7 +27,7 @@
 
 <body class="h-full antialiased text-slate-800 bg-slate-50 selection:bg-[#39A900] selection:text-white" x-data="{ sidebarOpen: false }">
 
-    <div class="min-h-screen flex flex-col lg:flex-row">
+    <div class="h-screen overflow-hidden flex flex-col lg:flex-row">
         <!-- Sidebar Navigation Executive -->
         <aside class="w-full lg:w-72 bg-[#001A29] text-slate-300 flex-shrink-0 flex flex-col justify-between border-r border-[#39A900]/20 lg:h-screen lg:sticky lg:top-0">
             <div>
@@ -133,7 +133,7 @@
         </aside>
 
         <!-- Main Content Canvas -->
-        <div class="flex-1 flex flex-col min-w-0">
+        <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
             <!-- Header Navbar Sticky -->
             <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/80 px-6 lg:px-10 flex items-center justify-between sticky top-0 z-30 shadow-xs">
                 <div class="flex items-center gap-4">
@@ -176,7 +176,7 @@
             </header>
 
             <!-- Alert Toast Notifications -->
-            <main class="flex-1 p-6 lg:p-10 max-w-7xl w-full mx-auto">
+            <main class="flex-1 p-6 lg:p-10 max-w-7xl w-full mx-auto overflow-y-auto">
                 @if(session('success'))
                     <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-2xl shadow-sm flex items-center justify-between">
                         <div class="flex items-center gap-3">
