@@ -133,6 +133,22 @@
                           hover:bg-sena-green-l">
                     <i class="fas fa-th-large text-xs"></i> Módulos
                 </a>
+
+                @if(!empty($hayConvocatoriaActiva) || (\Illuminate\Support\Facades\DB::table('convocatoria')->where('estado', 'abierta')->exists()))
+                {{-- Menú Convocatoria (sólo visible cuando hay convocatoria activa) --}}
+                <a href="#cardLogin"
+                   onclick="focusLoginCard(event)"
+                   class="flex items-center gap-1.5 px-3 py-2 text-sm font-bold
+                          text-green-700 bg-green-50 hover:bg-green-100 border border-green-200
+                          transition-all rounded-lg shadow-sm">
+                    <i class="fas fa-bullhorn text-xs text-green-600"></i> Convocatorias
+                    <span class="flex h-2 w-2 relative">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                </a>
+                @endif
+
                 <a href="#roles"
                    class="flex items-center gap-1.5 px-3 py-2 text-sm font-medium
                           text-gray-600 hover:text-sena-green transition-colors rounded-lg
@@ -181,6 +197,13 @@
                       text-gray-600 hover:bg-sena-green-l hover:text-sena-green transition-colors">
                 <i class="fas fa-th-large text-xs w-4"></i> Módulos
             </a>
+            @if(!empty($hayConvocatoriaActiva) || (\Illuminate\Support\Facades\DB::table('convocatoria')->where('estado', 'abierta')->exists()))
+            <a href="#cardLogin"
+               onclick="focusLoginCard(event)"
+               class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-green-700 bg-green-50 border border-green-200">
+                <i class="fas fa-bullhorn text-xs w-4 text-green-600"></i> Convocatorias
+            </a>
+            @endif
             <a href="{{ route('home') }}"
                class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium
                       text-gray-600 hover:bg-sena-green-l hover:text-sena-green transition-colors">
@@ -252,6 +275,21 @@
 
 <!-- jQuery -->
 <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
+<script>
+function focusLoginCard(e) {
+    var card = document.getElementById('cardLogin');
+    if (card) {
+        if (e) e.preventDefault();
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.add('ring-4', 'ring-sena-green', 'transition-all');
+        setTimeout(function() {
+            card.classList.remove('ring-4', 'ring-sena-green');
+        }, 2000);
+        var inputUser = card.querySelector('input[name="nickname"]');
+        if (inputUser) inputUser.focus();
+    }
+}
+</script>
 @yield('scripts')
 
 </body>

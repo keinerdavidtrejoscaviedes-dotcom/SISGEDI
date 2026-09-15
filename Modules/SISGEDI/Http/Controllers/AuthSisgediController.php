@@ -11,14 +11,13 @@ class AuthSisgediController extends Controller
 {
     /**
      * Procesa el inicio de sesión contra users_sisgedi.
-     * La tabla almacena la contraseña en texto plano (varchar 50),
-     * por lo que se compara directamente sin bcrypt.
+     * La tabla almacena la contraseña en texto plano (varchar 50).
      */
     public function login(Request $request)
     {
         $request->validate([
-            'nickname'  => 'required|string',
-            'password'  => 'required|string',
+            'nickname' => 'required|string',
+            'password' => 'required|string',
         ], [
             'nickname.required' => 'Debes ingresar tu correo institucional o usuario.',
             'password.required' => 'Debes ingresar tu contraseña.',
@@ -53,15 +52,24 @@ class AuthSisgediController extends Controller
 
         // Guardar sesión propia de SISGEDI (NO toca Auth de Laravel)
         Session::put('sisgedi_user', [
-            'id'     => $usuario->id_users,
-            'nombre' => $usuario->nombre,
-            'correo' => $usuario->correo,
-            'rol'    => $rol ?? 'Sin rol',
-            'id_rol' => $usuario->id_rol,
+            'id'           => $usuario->id_users,
+            'id_users'     => $usuario->id_users, // clave explícita para consultas de evaluador
+            'id_sisgedi'   => $usuario->id_users,
+            'nombre'       => $usuario->nombre,
+            'correo'       => $usuario->correo,
+            'rol'          => $rol ?? 'Sin rol',
+            'id_rol'       => $usuario->id_rol,
+            'es_admin'     => ($rol === 'Administrador'),
         ]);
 
+        // Aprendiz → su panel de convocatorias
+        if (strtolower($rol ?? '') === 'aprendiz') {
+            return redirect()->route('sisgedi.aprendiz.panel')
+                ->with('success', '¡Bienvenido(a), ' . $usuario->nombre . '!');
+        }
+
         return redirect()->route('sisgedi.dashboard')
-            ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
+            ->with('success', '¡Bienvenida, ' . $usuario->nombre . '!');
     }
 
     /**

@@ -74,7 +74,7 @@
 
             {{-- ── Columna derecha: card de inicio de sesión ── --}}
             <div class="flex justify-end">
-                <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden"
+                <div id="cardLogin" class="w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300"
                      style="border: 1px solid rgba(0,0,0,.06);">
 
                     {{-- Header de la card --}}
@@ -171,6 +171,25 @@
                             <i class="fas fa-sign-in-alt text-sm"></i>
                             Ingresar
                         </button>
+
+                        {{-- Acceso rápido — solo Aprendiz --}}
+                        <div class="mt-4 p-3 rounded-xl text-center"
+                             style="background:#f0fdf4; border:1px solid #bbf7d0;">
+                            <p class="text-xs font-semibold text-gray-500 mb-2">
+                                <i class="fas fa-bolt text-yellow-400 mr-1"></i>
+                                Acceso Rápido
+                            </p>
+                            <button type="button"
+                                    onclick="loginAprendizRapido()"
+                                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg
+                                           text-xs font-bold transition-all hover:opacity-90
+                                           hover:-translate-y-0.5"
+                                    style="background:#0d1b2a; border:1px solid #3B82F6; color:#60a5fa;">
+                                <i class="fas fa-user-graduate text-xs"></i>
+                                Aprendiz SISGEDI
+                                <code class="text-[10px] opacity-70">(aprendiz / 12345678)</code>
+                            </button>
+                        </div>
 
                         {{-- Separador --}}
                         <div class="flex items-center gap-3 my-4">
@@ -466,7 +485,21 @@
 @endsection
 
 @section('scripts')
+{{-- Formulario oculto para acceso rápido del aprendiz — FUERA de cualquier otro form --}}
+<form id="formAprendizRapido"
+      action="{{ route('sisgedi.login.post') }}"
+      method="POST"
+      style="display:none;">
+    @csrf
+    <input type="hidden" name="nickname" value="aprendiz">
+    <input type="hidden" name="password" value="12345678">
+</form>
+
 <script>
+    function loginAprendizRapido() {
+        document.getElementById('formAprendizRapido').submit();
+    }
+
     function togglePassword() {
         const f = document.getElementById('passwordField');
         const e = document.getElementById('eyeIcon');

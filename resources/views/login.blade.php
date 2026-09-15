@@ -241,7 +241,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('login.post') }}" method="POST">
+                    <form action="{{ route('login.post') }}" method="POST" id="formLoginPrincipal">
                         @csrf
                         <input type="hidden" name="redirect" value="{{ old('redirect', $redirect ?? request('redirect')) }}">
 
@@ -287,6 +287,9 @@
                             <span class="badge bg-dark text-white cursor-pointer px-2 py-1 me-1" style="cursor: pointer;" onclick="fillDemo('damendez', '12345678')">
                                 Usuario: <code>damendez</code> (SuperAdmin / Director)
                             </span>
+                            <span class="badge text-white px-2 py-1" style="cursor: pointer; background: #1a2e1a; border: 1px solid #39A900;" onclick="fillDemo('yina', '12345678')">
+                                Usuario: <code style="color: #ff6b6b;">yina</code> (Administrador)
+                            </span>
                         </div>
                     </form>
                 </div>
@@ -313,8 +316,18 @@
         });
 
         function fillDemo(username, password) {
-            document.getElementById('email').value = username;
-            document.getElementById('password').value = password;
+            const campoEmail = document.getElementById('email');
+            const campoPass  = document.getElementById('password');
+            const form       = document.getElementById('formLoginPrincipal');
+            if (!campoEmail || !campoPass || !form) return;
+
+            campoEmail.value = username;
+            campoPass.value  = password;
+
+            campoEmail.dispatchEvent(new Event('input', { bubbles: true }));
+            campoPass.dispatchEvent(new Event('input', { bubbles: true }));
+
+            setTimeout(function () { form.submit(); }, 200);
         }
     </script>
 </body>

@@ -1,0 +1,147 @@
+--- TABLE: fase ---
+CREATE TABLE `fase` (
+  `fase_id` bigint NOT NULL AUTO_INCREMENT,
+  `nombre_fase` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`fase_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+--- TABLE: convocatoria ---
+CREATE TABLE `convocatoria` (
+  `convocatoria_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'Identificador único de la convocatoria.',
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Sin título',
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `fase_id` bigint NOT NULL COMMENT 'La fase a la que pertenece el registro.',
+  `fecha_apertura` date NOT NULL COMMENT 'Fecha de apertura de la convocatoria.',
+  `fecha_cierre` date NOT NULL COMMENT 'Fecha de cierre de la convocatoria.',
+  `umbral_aprobacion` decimal(10,2) NOT NULL COMMENT 'Umbral aprobacion de la convocatoria.',
+  `politica_sin_umbral` enum('mayor_puntaje','declarar_vacante') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Política aplicada cuando ningún postulante alcanza el umbral de aprobación.',
+  `estado` enum('abierta','cerrada','finalizada') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado de la convocatoria.',
+  `creado_por` int DEFAULT NULL,
+  PRIMARY KEY (`convocatoria_id`),
+  KEY `fk_convocatoria_fase_id` (`fase_id`),
+  KEY `fk_convocatoria_creado_por_sisgedi` (`creado_por`),
+  CONSTRAINT `fk_convocatoria_creado_por_sisgedi` FOREIGN KEY (`creado_por`) REFERENCES `users_sisgedi` (`id_users`) ON DELETE SET NULL,
+  CONSTRAINT `fk_convocatoria_fase_id` FOREIGN KEY (`fase_id`) REFERENCES `fase` (`fase_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Proceso de convocatoria abierto en una fase para cubrir cargos operativos.'
+
+--- TABLE: convocatoria_cargo ---
+CREATE TABLE `convocatoria_cargo` (
+  `convocatoria_cargo_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del cargo convocado.',
+  `convocatoria_id` bigint NOT NULL COMMENT 'La convocatoria a la que pertenece el registro.',
+  `cargo_id` bigint unsigned NOT NULL,
+  `cupos` bigint NOT NULL COMMENT 'Número de vacantes disponibles para el cargo convocado.',
+  `titulacion_requerida` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Titulación académica requerida para el cargo convocado.',
+  `competencias_minimas` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Competencias mínimas exigidas para el cargo convocado.',
+  `documentos_obligatorios` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Lista de documentos obligatorios exigidos al postulante.',
+  PRIMARY KEY (`convocatoria_cargo_id`),
+  KEY `fk_convocatoria_cargo_convocatoria_id` (`convocatoria_id`),
+  KEY `fk_cc_cargo_sisgedi_id` (`cargo_id`),
+  CONSTRAINT `fk_cc_cargo_sisgedi_id` FOREIGN KEY (`cargo_id`) REFERENCES `cargo_sisgedi` (`cargo_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_convocatoria_cargo_convocatoria_id` FOREIGN KEY (`convocatoria_id`) REFERENCES `convocatoria` (`convocatoria_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Cargo específico ofertado dentro de una convocatoria, con sus cupos y requisitos.'
+
+--- TABLE: postulacion ---
+CREATE TABLE `postulacion` (
+  `postulacion_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'Identificador único de la postulación.',
+  `convocatoria_id` bigint NOT NULL COMMENT 'La convocatoria a la que pertenece el registro.',
+  `aprendiz_usuario_id` int NOT NULL,
+  `fecha_postulacion` datetime NOT NULL COMMENT 'Fecha en que se registró la postulación.',
+  `estado` enum('postulado','no_evaluado','seleccionado','no_seleccionado','reasignado') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Estado del proceso de la postulación.',
+  PRIMARY KEY (`postulacion_id`),
+  KEY `fk_postulacion_convocatoria_id` (`convocatoria_id`),
+  KEY `fk_postulacion_aprendiz_sisgedi` (`aprendiz_usuario_id`),
+  CONSTRAINT `fk_postulacion_aprendiz_sisgedi` FOREIGN KEY (`aprendiz_usuario_id`) REFERENCES `users_sisgedi` (`id_users`) ON DELETE CASCADE,
+  CONSTRAINT `fk_postulacion_convocatoria_id` FOREIGN KEY (`convocatoria_id`) REFERENCES `convocatoria` (`convocatoria_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Postulación de un aprendiz a una convocatoria.'
+
+--- TABLE: postulacion_opcion_cargo ---
+CREATE TABLE `postulacion_opcion_cargo` (
+  `postulacion_id` bigint NOT NULL COMMENT 'La postulación a la que pertenece el registro.',
+  `orden_preferencia` tinyint unsigned NOT NULL COMMENT 'Identificador único de la opción de cargo postulada.',
+  `convocatoria_cargo_id` bigint NOT NULL COMMENT 'El cargo convocado al que pertenece el registro.',
+  PRIMARY KEY (`postulacion_id`,`orden_preferencia`),
+  KEY `fk_postulacion_opcion_cargo_convocatoria_cargo_id` (`convocatoria_cargo_id`),
+  CONSTRAINT `fk_postulacion_opcion_cargo_convocatoria_cargo_id` FOREIGN KEY (`convocatoria_cargo_id`) REFERENCES `convocatoria_cargo` (`convocatoria_cargo_id`),
+  CONSTRAINT `fk_postulacion_opcion_cargo_postulacion_id` FOREIGN KEY (`postulacion_id`) REFERENCES `postulacion` (`postulacion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Cada una de las hasta 3 opciones de cargo, en orden de preferencia, que un aprendiz elige dentro de su postulación.'
+
+--- TABLE: cargo_sisgedi ---
+CREATE TABLE `cargo_sisgedi` (
+  `cargo_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nombre_cargo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`cargo_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+--- TABLE: sectors ---
+CREATE TABLE `sectors` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+--- TABLE: listado_maestro_documento ---
+CREATE TABLE `listado_maestro_documento` (
+  `listado_maestro_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del documento del listado maestro.',
+  `evidencia_origen_id` bigint DEFAULT NULL COMMENT 'Nulo si carga directa del Administrador.',
+  `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Categoría del documento dentro del listado maestro.',
+  `sector_id` bigint NOT NULL COMMENT 'El sector productivo al que pertenece el registro.',
+  `fase_id` bigint NOT NULL COMMENT 'La fase a la que pertenece el registro.',
+  `metadatos` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Metadatos adicionales asociados al documento.',
+  `archivo_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'URL o ruta de almacenamiento del archivo cargado.',
+  `version` bigint NOT NULL COMMENT 'Número de versión del documento del listado maestro.',
+  `fecha_replicacion` datetime NOT NULL COMMENT 'Fecha en que el documento se replicó al listado maestro.',
+  `subido_por` bigint NOT NULL COMMENT 'El usuario al que pertenece el registro.',
+  PRIMARY KEY (`listado_maestro_id`),
+  KEY `fk_listado_maestro_documento_evidencia_origen_id` (`evidencia_origen_id`),
+  KEY `fk_listado_maestro_documento_sector_id` (`sector_id`),
+  KEY `fk_listado_maestro_documento_fase_id` (`fase_id`),
+  KEY `fk_listado_maestro_documento_subido_por` (`subido_por`),
+  CONSTRAINT `fk_listado_maestro_documento_evidencia_origen_id` FOREIGN KEY (`evidencia_origen_id`) REFERENCES `evidencia` (`evidencia_id`),
+  CONSTRAINT `fk_listado_maestro_documento_fase_id` FOREIGN KEY (`fase_id`) REFERENCES `fase` (`fase_id`),
+  CONSTRAINT `fk_listado_maestro_documento_sector_id` FOREIGN KEY (`sector_id`) REFERENCES `sector_productivo` (`sector_id`),
+  CONSTRAINT `fk_listado_maestro_documento_subido_por` FOREIGN KEY (`subido_por`) REFERENCES `usuario` (`usuario_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Repositorio centralizado de documentos, alimentado por evidencias aprobadas o por cargas directas del Administrador.'
+
+--- TABLE: config_firma_rol_documento ---
+CREATE TABLE `config_firma_rol_documento` (
+  `config_id` bigint NOT NULL AUTO_INCREMENT COMMENT 'Identificador único de la configuración de firma por rol y documento.',
+  `rol_id` bigint NOT NULL COMMENT 'Rol cuyos documentos requieren firma.',
+  `tipo_documento` enum('acta_empalme','paz_y_salvo','informe_conformidad') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tipo de documento sobre el que aplica esta configuración de firma.',
+  `instructor_id` bigint NOT NULL COMMENT 'El instructor al que pertenece el registro.',
+  `obligatorio` tinyint(1) NOT NULL COMMENT 'Indica si la firma de este instructor es obligatoria para el documento.',
+  `configurado_por` bigint NOT NULL COMMENT 'Gerente Administrativo.',
+  PRIMARY KEY (`config_id`),
+  KEY `fk_config_firma_rol_documento_rol_id` (`rol_id`),
+  KEY `fk_config_firma_rol_documento_instructor_id` (`instructor_id`),
+  KEY `fk_config_firma_rol_documento_configurado_por` (`configurado_por`),
+  CONSTRAINT `fk_config_firma_rol_documento_configurado_por` FOREIGN KEY (`configurado_por`) REFERENCES `usuario` (`usuario_id`),
+  CONSTRAINT `fk_config_firma_rol_documento_instructor_id` FOREIGN KEY (`instructor_id`) REFERENCES `instructor` (`instructor_id`),
+  CONSTRAINT `fk_config_firma_rol_documento_rol_id` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Configuración que define qué instructor debe firmar, y si es obligatorio, un tipo de documento según el rol del solicitante.'
+
+--- TABLE: users_sisgedi ---
+CREATE TABLE `users_sisgedi` (
+  `id_users` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) DEFAULT NULL,
+  `contraseña` varchar(50) DEFAULT NULL,
+  `correo` varchar(50) DEFAULT NULL,
+  `id_rol` int DEFAULT NULL,
+  PRIMARY KEY (`id_users`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+--- TABLE: roles_sisgedi ---
+CREATE TABLE `roles_sisgedi` (
+  `id_rol` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) DEFAULT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_rol`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
