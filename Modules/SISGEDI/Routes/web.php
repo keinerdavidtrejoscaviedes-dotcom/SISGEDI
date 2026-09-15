@@ -2,10 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\SISGEDI\Http\Controllers\DocumentoController;
+use Modules\SISGEDI\Http\Controllers\GerenteComercialController;
 use Modules\SISGEDI\Http\Controllers\AuthSisgediController;
 
 
 Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
+
+    Route::prefix('comercial')->name('comercial.')->group(function () {
+        Route::get('/producto', [GerenteComercialController::class, 'portafolioProducto'])->name('producto');
+        Route::get('/dashboard', [GerenteComercialController::class, 'dasboardComercial'])->name('dashboard');
+    });
 
     // ── Públicas (sin sesión requerida) ──────────────────────
     Route::get('/',        [DocumentoController::class,  'index'])->name('index');

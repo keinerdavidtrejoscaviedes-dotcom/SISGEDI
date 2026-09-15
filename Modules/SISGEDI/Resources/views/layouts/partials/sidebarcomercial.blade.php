@@ -53,7 +53,7 @@
                     <div class="space-y-1">
                         <p class="px-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4">Fase Inicial</p>
                         <!-- 1. Dashboard Comercial -->
-                        <a href="" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-[#39A900] text-white shadow-md shadow-[#39A900]/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
+                        <a href="{{ route('sisgedi.comercial.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-[#39A900] text-white shadow-md shadow-[#39A900]/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' }}">
                             <i class="fas fa-chart-pie text-lg w-5 text-center"></i>
                             <span>Dashboard Comercial</span>
                         </a>
@@ -65,7 +65,7 @@
                         </a>
 
                         <!-- 3. Portafolio de Productos -->
-                        <a href="" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 text-slate-400 hover:text-slate-200 hover:bg-slate-800/40">
+                        <a href="{{ route('sisgedi.comercial.producto') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 {{ request()->routeIs('sisgedi.comercial.producto') ? 'bg-[#39A900] text-white shadow-md shadow-[#39A900]/30' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40' }}">
                             <i class="fas fa-box-open w-5 text-center"></i>
                             <span>Portafolio de Productos</span>
                         </a>
