@@ -114,8 +114,20 @@ class AuthSisgediController extends Controller
                 ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
         }
 
-        // 6. Administrador (26), Gerente General (1), Gerente de Producción (3),
-        //    Colaborador -> Dashboard Principal
+        // 6. Colaborador -> Dashboard del Colaborador
+        if ($rolLower === 'colaborador') {
+            return redirect()->route('sisgedi.colaborador.dashboard')
+                ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
+        }
+
+        // 7. Instructor -> Dashboard del Instructor
+        if ($rolLower === 'instructor') {
+            return redirect()->route('sisgedi.instructor.dashboard')
+                ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
+        }
+
+        // 8. Administrador (26), Gerente General (1), Gerente de Producción (3)
+        //    -> Dashboard Principal
         return redirect()->route('sisgedi.dashboard')
             ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
     }

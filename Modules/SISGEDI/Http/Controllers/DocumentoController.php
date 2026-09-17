@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Modules\SISGEDI\Entities\Documento;
 
 class DocumentoController extends Controller
@@ -61,7 +62,34 @@ class DocumentoController extends Controller
             return redirect()->route('sisgedi.comercial.dashboard');
         }
 
-        // ── Tarjetas de resumen ───────────────────────────────────────
+        // 3. Gerente Administrativo -> Panel de cascada de tareas
+        if (($usuario['id_rol'] ?? null) == 2 || str_contains($rolLower, 'administrativo')) {
+            return redirect()->route('sisgedi.gerente.dashboard');
+        }
+
+        $rolAscii = Str::ascii($rolLower);
+
+        // 4. Gestor -> Dashboard del Gestor
+        if (Str::startsWith($rolAscii, 'gestor.') || Str::startsWith($rolAscii, 'gestor ')) {
+            return redirect()->route('sisgedi.dashboard.gestor');
+        }
+
+        // 5. Líder -> Dashboard del Líder
+        if (Str::startsWith($rolAscii, 'lider ')) {
+            return redirect()->route('sisgedi.dashboard.lider');
+        }
+
+        // 6. Colaborador -> Dashboard del Colaborador
+        if ($rolLower === 'colaborador') {
+            return redirect()->route('sisgedi.colaborador.dashboard');
+        }
+
+        // 7. Instructor -> Dashboard del Instructor
+        if ($rolLower === 'instructor') {
+            return redirect()->route('sisgedi.instructor.dashboard');
+        }
+
+        // ── Tarjetas de resumen (Administrador, Gerente General, Gerente de Producción) ──
         $totalUsuarios         = DB::table('users_sisgedi')->count();
         $totalSectores         = DB::table('sectors')->whereNull('deleted_at')->count();
         $convocatoriasAbiertas = DB::table('convocatoria')->where('estado', 'abierta')->count();
