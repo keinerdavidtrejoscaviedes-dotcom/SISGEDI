@@ -29,17 +29,30 @@ class DocumentoController extends Controller
                 ->withErrors(['nickname' => 'Debes iniciar sesión para acceder.']);
         }
 
-        $totalDocumentos   = Documento::count();
-        $documentosActivos = Documento::where('estado', 'Activo')->count();
-        $documentosRecientes = Documento::where('created_at', '>=', now()->subDays(30))->count();
-        $ultimosDocumentos = Documento::orderBy('created_at', 'desc')->limit(8)->get();
+        // Obtener el rol del usuario desde la sesión
+        $usuario = session('sisgedi_user');
+        $rol = strtolower(trim($usuario['rol'] ?? ''));
 
-        return view('sisgedi::dashboard', compact(
-            'totalDocumentos',
-            'documentosActivos',
-            'documentosRecientes',
-            'ultimosDocumentos'
-        ));
+        // Redireccionar según el rol - mapeo según roles de base de datos
+        if (empty($rol)) {
+            // Si no hay rol definido, mostrar mensaje de error
+            return redirect()->route('sisgedi.index')
+                ->withErrors(['nickname' => 'Tu cuenta no tiene un rol asignado.']);
+        }
+
+        // Colaborador → Dashboard de Colaborador
+        if ($rol === 'colaborador') {
+            return redirect()->route('sisgedi.colaborador.dashboard');
+        }
+
+        // Instructor, Gestor, Líder, Gerente → Dashboard de Instructor/Supervisor
+        if ($rol === 'instructor' || str_contains($rol, 'gestor') || str_contains($rol, 'líder') || str_contains($rol, 'gerente')) {
+            return redirect()->route('sisgedi.instructor.dashboard');
+        }
+
+        // Si no coincide con ningún rol esperado, mostrar error
+        return redirect()->route('sisgedi.index')
+            ->withErrors(['nickname' => 'Tu rol ("' . $usuario['rol'] . '") no tiene acceso a dashboards aún.']);
     }
 
     // 3. FORMULARIO DE CREACIÓN

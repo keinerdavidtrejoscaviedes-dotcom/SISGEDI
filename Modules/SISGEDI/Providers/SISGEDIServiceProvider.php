@@ -22,7 +22,9 @@ class SISGEDIServiceProvider extends ModuleServiceProvider
      *
      * @var string[]
      */
-    // protected array $commands = [];
+    protected array $commands = [
+        \Modules\SISGEDI\Commands\CreateTestTask::class,
+    ];
 
     /**
      * Provider classes to register.
