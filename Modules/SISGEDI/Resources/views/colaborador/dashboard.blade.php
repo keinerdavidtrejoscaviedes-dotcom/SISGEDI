@@ -11,13 +11,13 @@
     <!-- 4 Tarjetas de Resumen -->
     <div class="grid grid-cols-4 gap-4 mb-8">
         <!-- Tareas Asignadas -->
-        <div class="bg-white border-l-4 border-green-600 rounded p-6 shadow">
+        <div class="bg-white border-l-4 rounded p-6 shadow" style="border-left-color: #075547;">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 text-sm">Tareas Asignadas</p>
                     <p class="text-4xl font-bold text-gray-800 mt-2">12</p>
                 </div>
-                <svg class="w-12 h-12 text-green-600 opacity-30" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-12 h-12 opacity-30" fill="currentColor" viewBox="0 0 20 20" style="color: #075547;">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
                     <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000-2H3a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V4a1 1 0 00-1-1 1 1 0 000 2 2 2 0 012 2v12H4V5z" clip-rule="evenodd"></path>
                 </svg>
@@ -128,7 +128,7 @@
                     <span class="text-sm font-bold text-gray-800">68%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-3">
-                    <div class="bg-green-600 h-3 rounded-full" style="width: 68%"></div>
+                    <div class="h-3 rounded-full" style="background-color: #075547; width: 68%"></div>
                 </div>
             </div>
 
@@ -136,7 +136,7 @@
                 <div class="text-sm">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-gray-800">Ana Torres (Instructora)</span>
-                        <span class="bg-green-100 text-green-700 px-2 py-1 text-xs rounded font-semibold">Firmado</span>
+                        <span class="px-2 py-1 text-xs rounded font-semibold" style="background-color: #e6f4f1; color: #075547;">Firmado</span>
                     </div>
                     <p class="text-xs text-gray-500">20 Ago 2026</p>
                 </div>
@@ -144,7 +144,7 @@
                 <div class="text-sm">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-gray-800">Carlos Pérez (Líder)</span>
-                        <span class="bg-green-100 text-green-700 px-2 py-1 text-xs rounded font-semibold">Firmado</span>
+                        <span class="px-2 py-1 text-xs rounded font-semibold" style="background-color: #e6f4f1; color: #075547;">Firmado</span>
                     </div>
                     <p class="text-xs text-gray-500">22 Ago 2026</p>
                 </div>
@@ -170,15 +170,15 @@
     <!-- Resumen de Horas por Semana -->
     <div class="grid grid-cols-4 gap-4">
         <!-- Semana 30 -->
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded p-6 text-center border-t-4 border-green-500">
+        <div class="rounded p-6 text-center border-t-4" style="background: linear-gradient(to bottom right, rgba(7,85,71,0.05), rgba(7,85,71,0.1)); border-top-color: #075547;">
             <p class="text-sm text-gray-700 font-medium">Semana 30</p>
-            <p class="text-3xl font-bold text-green-700 mt-2">38 h</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">38 h</p>
         </div>
 
         <!-- Semana 31 -->
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded p-6 text-center border-t-4 border-green-500">
+        <div class="rounded p-6 text-center border-t-4" style="background: linear-gradient(to bottom right, rgba(7,85,71,0.05), rgba(7,85,71,0.1)); border-top-color: #075547;">
             <p class="text-sm text-gray-700 font-medium">Semana 31</p>
-            <p class="text-3xl font-bold text-green-700 mt-2">40 h</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">40 h</p>
         </div>
 
         <!-- Semana 32 -->
@@ -189,9 +189,9 @@
         </div>
 
         <!-- Semana 33 -->
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded p-6 text-center border-t-4 border-green-500">
+        <div class="rounded p-6 text-center border-t-4" style="background: linear-gradient(to bottom right, rgba(7,85,71,0.05), rgba(7,85,71,0.1)); border-top-color: #075547;">
             <p class="text-sm text-gray-700 font-medium">Semana 33</p>
-            <p class="text-3xl font-bold text-green-700 mt-2">24 h</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">24 h</p>
         </div>
     </div>
 </div>

@@ -9,16 +9,16 @@
 <body class="bg-gray-100">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="w-48 bg-gradient-to-b from-green-700 to-green-800 text-white flex flex-col">
+        <div class="w-48 text-white flex flex-col" style="background: linear-gradient(to bottom, #075547, #054239);">
             <!-- Logo -->
-            <div class="p-6 border-b border-green-600">
+            <div class="p-6 border-b" style="border-color: rgba(255,255,255,0.1);">
                 <div class="flex items-center space-x-2">
                     <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                        <span class="text-green-700 font-bold text-lg">SG</span>
+                        <span class="font-bold text-lg" style="color: #075547;">SG</span>
                     </div>
                     <div>
                         <p class="font-bold text-sm">SISGEDI</p>
-                        <p class="text-xs text-green-100">Gestión integral</p>
+                        <p class="text-xs opacity-75">Gestión integral</p>
                     </div>
                 </div>
             </div>
@@ -60,13 +60,6 @@
                     <span class="font-medium">Plan de Innovación</span>
                 </a>
 
-                <a href="{{ route('sisgedi.colaborador.convocatorias') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg {{ request()->routeIs('sisgedi.colaborador.convocatorias') ? 'bg-white bg-opacity-20' : 'hover:bg-white hover:bg-opacity-10' }} transition">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2 3a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H3a1 1 0 01-1-1V3z"></path>
-                    </svg>
-                    <span class="font-medium">Convocatorias</span>
-                </a>
-
                 <a href="{{ route('sisgedi.colaborador.mis-evidencias') }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg {{ request()->routeIs('sisgedi.colaborador.mis-evidencias') ? 'bg-white bg-opacity-20' : 'hover:bg-white hover:bg-opacity-10' }} transition">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
@@ -83,7 +76,7 @@
             </nav>
 
             <!-- Footer -->
-            <div class="border-t border-green-600 p-4 text-xs text-green-100">
+            <div class="border-t p-4 text-xs opacity-75" style="border-color: rgba(255,255,255,0.1);">
                 <p class="mb-2">Centro La Angostura</p>
                 <p>Campoalegre - Huila</p>
             </div>
@@ -106,7 +99,7 @@
                     <!-- User Profile Dropdown -->
                     <div class="relative group border-l border-gray-200 pl-6">
                         <button class="flex items-center space-x-3 hover:opacity-80 transition" onclick="toggleProfileMenu()">
-                            <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">
+                            <div class="w-10 h-10 text-white rounded-full flex items-center justify-center font-bold" style="background-color: #075547;">
                                 JR
                             </div>
                             <div class="text-left">
@@ -118,9 +111,9 @@
                         <!-- Dropdown Menu -->
                         <div id="profileMenu" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 border border-gray-200 overflow-hidden">
                             <!-- User Info Section -->
-                            <div class="bg-gradient-to-r from-green-50 to-green-100 px-6 py-6 border-b border-gray-200">
+                            <div class="px-6 py-6 border-b border-gray-200" style="background: linear-gradient(to right, rgba(7,85,71,0.1), rgba(7,85,71,0.15));">
                                 <div class="flex items-center space-x-4">
-                                    <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-2xl">
+                                    <div class="w-16 h-16 text-white rounded-full flex items-center justify-center font-bold text-2xl" style="background-color: #075547;">
                                         JR
                                     </div>
                                     <div>
@@ -169,7 +162,7 @@
                                     <p class="text-xs font-semibold text-gray-500 uppercase mb-3">Información de Rol</p>
                                     <div class="space-y-2 text-sm">
                                         <div class="flex items-center space-x-2">
-                                            <span class="inline-block w-3 h-3 bg-green-600 rounded-full"></span>
+                                            <span class="inline-block w-3 h-3 rounded-full" style="background-color: #075547;"></span>
                                             <span class="text-gray-700">Rol: <strong>Colaborador</strong></span>
                                         </div>
                                         <div class="flex items-center space-x-2">

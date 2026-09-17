@@ -36,9 +36,9 @@
             <p class="text-xs text-gray-500 mt-1">Pendientes de aprobación</p>
         </div>
 
-        <div class="bg-white rounded shadow p-6 border-l-4 border-green-500">
+        <div class="bg-white rounded shadow p-6 border-l-4" style="border-left-color: #075547;">
             <p class="text-gray-600 text-sm font-semibold uppercase">Aprobadas</p>
-            <p class="text-3xl font-bold text-green-600 mt-2">{{ $aprobadas->count() }}</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">{{ $aprobadas->count() }}</p>
             <p class="text-xs text-gray-500 mt-1">Firmadas y completadas</p>
         </div>
 
@@ -51,7 +51,7 @@
 
     <!-- Filtros -->
     <div class="mb-6 flex space-x-2">
-        <button onclick="filterEvidences('all')" class="px-4 py-2 bg-blue-600 text-white rounded font-semibold text-sm filter-btn active-btn" data-filter="all">
+        <button onclick="filterEvidences('all')" class="px-4 py-2 text-white rounded font-semibold text-sm filter-btn active-btn" style="background-color: #075547;" data-filter="all">
             Todas ({{ $allApprovals->count() }})
         </button>
         <button onclick="filterEvidences('pending')" class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded font-semibold text-sm filter-btn" data-filter="pending">
@@ -81,8 +81,8 @@
                         $statusLabel = '⏳ En Revisión';
                         $statusKey = 'pending';
                     } elseif($approval->status === 'aprobado') {
-                        $statusClass = 'border-green-500';
-                        $badgeClass = 'bg-green-100 text-green-700';
+                        $statusClass = 'border-0';
+                        $badgeClass = 'px-3 py-1 rounded text-xs font-semibold';
                         $statusLabel = '✓ Aprobada';
                         $statusKey = 'approved';
                     } elseif($approval->status === 'rechazado') {
@@ -140,8 +140,8 @@
                                             @endif
                                         </div>
                                         <a href="{{ route('sisgedi.colaborador.evidences.download', $evidence->id) }}" 
-                                           class="ml-4 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-semibold whitespace-nowrap">
-                                            📥 Descargar
+                                           class="ml-4 text-white px-3 py-1 rounded text-xs font-semibold whitespace-nowrap" style="background-color: #075547;">
+                                            Descargar
                                         </a>
                                     </div>
                                 @endforeach
@@ -183,7 +183,7 @@
                         </div>
                         <div class="flex space-x-3">
                             <a href="{{ route('sisgedi.colaborador.mis-tareas') }}" 
-                               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-semibold">
+                               class="text-white px-4 py-2 rounded text-sm font-semibold" style="background-color: #075547;">
                                 ↻ Resubmitir Evidencia
                             </a>
                         </div>
@@ -230,12 +230,14 @@
 
         // Actualizar botones
         buttons.forEach(btn => {
-            btn.classList.remove('bg-blue-600', 'text-white', 'active-btn');
+            btn.classList.remove('text-white');
             btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+            btn.style.backgroundColor = '';
         });
         
         event.target.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
-        event.target.classList.add('bg-blue-600', 'text-white', 'active-btn');
+        event.target.classList.add('text-white');
+        event.target.style.backgroundColor = '#075547';
 
         // Filtrar items
         const statusMap = {

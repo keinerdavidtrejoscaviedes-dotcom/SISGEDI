@@ -17,7 +17,11 @@
             <form action="{{ route('sisgedi.instructor.signatures.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 
-                <div class="border-2 border-dashed border-gray-300 rounded p-8 text-center cursor-pointer hover:border-green-600 transition" onclick="document.getElementById('signatureFile').click()">
+                <div class="border-2 border-dashed border-gray-300 rounded p-8 text-center cursor-pointer transition" 
+                 style="border-color: #075547;"
+                 onmouseover="this.style.borderColor='#054239'"
+                 onmouseout="this.style.borderColor='#075547'"
+                 onclick="document.getElementById('signatureFile').click()">
                     <input type="file" name="signature_file" id="signatureFile" accept="image/*" class="hidden" required onchange="updateFileName(this)">
                     <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -27,7 +31,7 @@
                 </div>
 
                 <div class="flex space-x-3">
-                    <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    <button type="submit" class="flex-1 text-white font-bold py-2 px-4 rounded" style="background-color: #075547;">
                         Cargar Firma
                     </button>
                     <button type="button" onclick="document.getElementById('signatureFile').value=''; document.getElementById('fileLabel').textContent='Haz clic para seleccionar tu firma'" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
@@ -74,7 +78,7 @@
                                 <p class="text-sm text-gray-700 font-medium mt-1">{{ $signature->getSignedDocumentsCount() ?? 0 }} docs firmados</p>
                             </div>
                             @if($signature->is_active)
-                                <span class="bg-green-100 text-green-700 px-2 py-1 text-xs rounded font-semibold whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs rounded font-semibold whitespace-nowrap" style="background-color: #e6f4f1; color: #075547;">
                                     Activa
                                 </span>
                             @endif

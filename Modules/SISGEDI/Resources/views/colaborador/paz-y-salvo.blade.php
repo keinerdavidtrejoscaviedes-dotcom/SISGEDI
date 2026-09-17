@@ -45,7 +45,7 @@
                 <div>
                     <p class="text-gray-600 text-sm font-medium">Estado</p>
                     <p class="text-lg font-bold text-gray-800 mt-2">
-                        <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm">En Proceso</span>
+                        <span class="inline-block px-3 py-1 rounded text-sm" style="background-color: #e6f4f1; color: #075547;">En Proceso</span>
                     </p>
                 </div>
                 <svg class="w-12 h-12 text-blue-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@
                         <h3 class="font-semibold text-gray-800">Ana Torres</h3>
                         <p class="text-sm text-gray-600">Instructora</p>
                     </div>
-                    <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Firmado</span>
+                    <span class="inline-block px-3 py-1 rounded text-xs font-semibold" style="background-color: #e6f4f1; color: #075547;">Firmado</span>
                 </div>
                 <p class="text-sm text-gray-600 mb-2">
                     <strong>Fecha:</strong> 20 Ago 2026
@@ -81,7 +81,7 @@
                         <h3 class="font-semibold text-gray-800">Carlos Pérez</h3>
                         <p class="text-sm text-gray-600">Líder de Sector</p>
                     </div>
-                    <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Firmado</span>
+                    <span class="inline-block px-3 py-1 rounded text-xs font-semibold" style="background-color: #e6f4f1; color: #075547;">Firmado</span>
                 </div>
                 <p class="text-sm text-gray-600 mb-2">
                     <strong>Fecha:</strong> 22 Ago 2026
@@ -130,9 +130,9 @@
             </p>
 
             <div class="space-y-3">
-                <div class="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
+                <div class="flex items-center justify-between p-3 rounded border" style="background-color: #f0f9f7; border-color: #075547;">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #075547;">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                         <span class="text-sm font-medium text-gray-800">Bitácora 1 completa</span>
@@ -140,9 +140,9 @@
                     <button class="text-blue-600 hover:text-blue-800 text-sm font-semibold">Ver</button>
                 </div>
 
-                <div class="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
+                <div class="flex items-center justify-between p-3 rounded border" style="background-color: #f0f9f7; border-color: #075547;">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #075547;">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                         <span class="text-sm font-medium text-gray-800">Bitácora 2 completa</span>
@@ -150,9 +150,9 @@
                     <button class="text-blue-600 hover:text-blue-800 text-sm font-semibold">Ver</button>
                 </div>
 
-                <div class="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
+                <div class="flex items-center justify-between p-3 rounded border" style="background-color: #f0f9f7; border-color: #075547;">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #075547;">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                         <span class="text-sm font-medium text-gray-800">Plan de Innovación</span>
@@ -160,9 +160,9 @@
                     <button class="text-blue-600 hover:text-blue-800 text-sm font-semibold">Ver</button>
                 </div>
 
-                <div class="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
+                <div class="flex items-center justify-between p-3 rounded border" style="background-color: #f0f9f7; border-color: #075547;">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #075547;">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                         <span class="text-sm font-medium text-gray-800">Diagnóstico Inicial</span>
@@ -192,7 +192,7 @@
             </div>
 
             <!-- Botón para iniciar firma -->
-            <button class="w-full mt-8 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded">
+            <button class="w-full mt-8 text-white font-bold py-3 px-6 rounded" style="background-color: #075547;">
                 Iniciar Proceso de Firma
             </button>
         </div>

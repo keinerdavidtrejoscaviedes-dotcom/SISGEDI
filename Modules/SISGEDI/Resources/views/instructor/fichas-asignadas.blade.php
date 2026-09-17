@@ -26,7 +26,7 @@
 
                 <!-- Filtros de Estado -->
                 <div class="mb-6 flex space-x-2">
-                    <button onclick="filterColaboradores(this, 'all')" class="filter-btn px-4 py-2 bg-green-600 text-white rounded font-semibold text-sm active" data-filter="all">
+                    <button onclick="filterColaboradores(this, 'all')" class="filter-btn px-4 py-2 text-white rounded font-semibold text-sm active" style="background-color: #075547;" data-filter="all">
                         Todos
                     </button>
                     <button onclick="filterColaboradores(this, 'pending')" class="filter-btn px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded font-semibold text-sm" data-filter="pending">
@@ -89,7 +89,7 @@
                                         <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm font-semibold">{{ $colab['total'] }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <a href="{{ route('sisgedi.instructor.detalle-colaborador', $colab['id']) }}" class="bg-green-600 hover:bg-green-700 text-white text-xs px-4 py-2 rounded font-semibold inline-block">
+                                        <a href="{{ route('sisgedi.instructor.detalle-colaborador', $colab['id']) }}" class="text-white text-xs px-4 py-2 rounded font-semibold inline-block" style="background-color: #075547;">
                                             Ver Detalle
                                         </a>
                                     </td>
@@ -114,8 +114,10 @@
                 const firstFichaCont = document.querySelector('.ficha-content');
                 
                 if (firstFichaBtn && firstFichaCont) {
-                    firstFichaBtn.classList.add('border-green-600', 'text-green-600');
+                    firstFichaBtn.classList.add('border-b-2', 'text-gray-800', 'font-bold');
                     firstFichaBtn.classList.remove('border-transparent', 'text-gray-600');
+                    firstFichaBtn.style.borderBottomColor = '#075547';
+                    firstFichaBtn.style.color = '#075547';
                     firstFichaCont.classList.remove('hidden');
                 }
             });
@@ -137,7 +139,9 @@
                 if (content && tab) {
                     content.classList.remove('hidden');
                     tab.classList.remove('border-transparent', 'text-gray-600');
-                    tab.classList.add('border-green-600', 'text-green-600');
+                    tab.classList.add('border-b-2', 'text-gray-800', 'font-bold');
+                    tab.style.borderBottomColor = '#075547';
+                    tab.style.color = '#075547';
                 }
             }
 
@@ -147,11 +151,13 @@
 
                 // Actualizar botones
                 buttons.forEach(btn => {
-                    btn.classList.remove('bg-green-600', 'text-white');
+                    btn.classList.remove('text-white');
                     btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                    btn.style.backgroundColor = '';
                 });
                 button.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
-                button.classList.add('bg-green-600', 'text-white');
+                button.classList.add('text-white');
+                button.style.backgroundColor = '#075547';
 
                 // Filtrar filas
                 rows.forEach(row => {

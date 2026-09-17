@@ -48,7 +48,7 @@
                                         Pendiente
                                     </span>
                                 @elseif($task->status === 'aprobado')
-                                    <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">
+                                    <span class="inline-block px-3 py-1 rounded text-xs font-semibold" style="background-color: #e6f4f1; color: #075547;">
                                         ✓ Aprobado
                                     </span>
                                 @elseif($task->status === 'rechazado')
@@ -85,7 +85,8 @@
                                 @if($task->status === 'pendiente' || $task->status === 'rechazado')
                                     <button 
                                         onclick="toggleUploadForm({{ $task->id }})" 
-                                        class="bg-green-600 hover:bg-green-700 text-white text-xs px-4 py-2 rounded font-semibold">
+                                        class="text-white text-xs px-4 py-2 rounded font-semibold" 
+                                        style="background-color: #075547;">
                                         + Subir Evidencia
                                     </button>
                                 @elseif($task->status === 'aprobado')
@@ -108,7 +109,10 @@
                                             @csrf
 
                                             <!-- Zona de carga -->
-                                            <div class="border-2 border-dashed border-gray-300 rounded p-8 text-center cursor-pointer hover:border-green-600 transition" 
+                                            <div class="border-2 border-dashed border-gray-300 rounded p-8 text-center cursor-pointer transition" 
+                                                 style="border-color: #075547;"
+                                                 onmouseover="this.style.borderColor='#054239'"
+                                                 onmouseout="this.style.borderColor='#075547'"
                                                  onclick="document.getElementById('file-{{ $task->id }}').click()">
                                                 <input type="file" 
                                                        id="file-{{ $task->id }}" 
@@ -135,7 +139,7 @@
 
                                             <!-- Botones -->
                                             <div class="flex space-x-3">
-                                                <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                                <button type="submit" class="flex-1 text-white font-bold py-2 px-4 rounded" style="background-color: #075547;">
                                                     Subir Evidencia
                                                 </button>
                                                 <button type="button" 

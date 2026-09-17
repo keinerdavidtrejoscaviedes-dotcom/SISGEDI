@@ -24,9 +24,9 @@
             <p class="text-xs text-gray-500 mt-1">Por revisar y firmar</p>
         </div>
 
-        <div class="bg-white rounded shadow p-6 border-l-4 border-green-600">
+        <div class="bg-white rounded shadow p-6 border-l-4" style="border-left-color: #075547;">
             <p class="text-gray-600 text-sm font-semibold uppercase">Aprobadas</p>
-            <p class="text-3xl font-bold text-green-600 mt-2">{{ $approved->count() }}</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">{{ $approved->count() }}</p>
             <p class="text-xs text-gray-500 mt-1">Firmadas y completadas</p>
         </div>
 
@@ -45,7 +45,7 @@
 
     <!-- Filtros -->
     <div class="mb-6 flex space-x-2">
-        <button onclick="filterTasks('all')" class="px-4 py-2 bg-blue-600 text-white rounded font-semibold text-sm filter-btn" data-filter="all">
+        <button onclick="filterTasks('all')" class="px-4 py-2 text-white rounded font-semibold text-sm filter-btn" style="background-color: #075547;" data-filter="all">
             Todas ({{ $tasks->count() }})
         </button>
         <button onclick="filterTasks('pending')" class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded font-semibold text-sm filter-btn" data-filter="pending">

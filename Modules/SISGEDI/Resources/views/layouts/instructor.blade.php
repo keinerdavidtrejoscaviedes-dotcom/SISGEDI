@@ -10,23 +10,23 @@
 <body class="bg-gray-100">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="w-48 bg-gradient-to-b from-green-700 to-green-800 text-white flex flex-col">
+        <div class="w-48 text-white flex flex-col" style="background: linear-gradient(to bottom, #075547, #054239);">
             <!-- Logo -->
-            <div class="p-6 border-b border-green-600">
+            <div class="p-6 border-b" style="border-color: rgba(255,255,255,0.1);">
                 <div class="flex items-center space-x-2">
                     <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                        <span class="text-green-700 font-bold text-lg">SG</span>
+                        <span class="font-bold text-lg" style="color: #075547;">SG</span>
                     </div>
                     <div>
                         <p class="font-bold text-sm">SISGEDI</p>
-                        <p class="text-xs text-green-100">Gestión integral</p>
+                        <p class="text-xs opacity-75">Gestión integral</p>
                     </div>
                 </div>
             </div>
 
             <!-- Context Selector -->
-            <div class="border-b border-green-600 px-4 py-3">
-                <select class="w-full px-3 py-2 rounded text-sm font-medium bg-green-600 text-white border border-green-500 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-white cursor-pointer">
+            <div class="border-b px-4 py-3" style="border-color: rgba(255,255,255,0.1);">
+                <select class="w-full px-3 py-2 rounded text-sm font-medium text-white border focus:outline-none focus:ring-2 focus:ring-white cursor-pointer" style="background-color: rgba(7,85,71,0.8); border-color: rgba(255,255,255,0.2);">
                     <option class="bg-white text-gray-800">Instructor</option>
                     <option class="bg-white text-gray-800">Líder</option>
                 </select>
@@ -64,7 +64,7 @@
             </nav>
 
             <!-- Footer -->
-            <div class="border-t border-green-600 p-4 text-xs text-green-100">
+            <div class="border-t p-4 text-xs opacity-75" style="border-color: rgba(255,255,255,0.1);">
                 <p class="mb-2">Centro La Angostura</p>
                 <p>Campoalegre - Huila</p>
             </div>

@@ -13,20 +13,20 @@
         <button class="px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded font-semibold hover:bg-gray-50">
             Bitácora 1 (Inducción)
         </button>
-        <button class="px-6 py-3 bg-green-600 text-white rounded font-semibold hover:bg-green-700">
+        <button class="px-6 py-3 text-white rounded font-semibold" style="background-color: #075547;">
             Bitácora 2 (Formación)
         </button>
     </div>
 
     <!-- Tarjetas de Resumen -->
     <div class="grid grid-cols-4 gap-4 mb-8">
-        <div class="bg-white border-l-4 border-green-600 rounded p-6 shadow">
+        <div class="bg-white border-l-4 rounded p-6 shadow" style="border-left-color: #075547;">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 text-sm">Horas Registradas</p>
                     <p class="text-4xl font-bold text-gray-800 mt-2">142 h</p>
                 </div>
-                <svg class="w-12 h-12 text-green-600 opacity-30" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-12 h-12 opacity-30" fill="currentColor" viewBox="0 0 20 20" style="color: #075547;">
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00-.293.707l-.707.707a1 1 0 101.414 1.414L9 9.414V6z"></path>
                 </svg>
             </div>
@@ -82,22 +82,22 @@
 
     <!-- Resumen de horas por semana -->
     <div class="grid grid-cols-4 gap-4 mb-8">
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded p-6 text-center border-t-4 border-green-500">
+        <div class="rounded p-6 text-center border-t-4" style="background: linear-gradient(to bottom right, rgba(7,85,71,0.05), rgba(7,85,71,0.1)); border-top-color: #075547;">
             <p class="text-sm text-gray-700 font-medium">Semana 30</p>
-            <p class="text-3xl font-bold text-green-700 mt-2">38 h</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">38 h</p>
         </div>
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded p-6 text-center border-t-4 border-green-500">
+        <div class="rounded p-6 text-center border-t-4" style="background: linear-gradient(to bottom right, rgba(7,85,71,0.05), rgba(7,85,71,0.1)); border-top-color: #075547;">
             <p class="text-sm text-gray-700 font-medium">Semana 31</p>
-            <p class="text-3xl font-bold text-green-700 mt-2">40 h</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">40 h</p>
         </div>
         <div class="bg-gradient-to-br from-red-50 to-red-100 rounded p-6 text-center border-t-4 border-red-500">
             <p class="text-sm text-gray-700 font-medium">Semana 32</p>
             <p class="text-3xl font-bold text-red-700 mt-2">0 h</p>
             <p class="text-xs text-red-600 mt-1">Sin registro</p>
         </div>
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded p-6 text-center border-t-4 border-green-500">
+        <div class="rounded p-6 text-center border-t-4" style="background: linear-gradient(to bottom right, rgba(7,85,71,0.05), rgba(7,85,71,0.1)); border-top-color: #075547;">
             <p class="text-sm text-gray-700 font-medium">Semana 33</p>
-            <p class="text-3xl font-bold text-green-700 mt-2">24 h</p>
+            <p class="text-3xl font-bold mt-2" style="color: #075547;">24 h</p>
         </div>
     </div>
 
@@ -105,7 +105,7 @@
     <div class="bg-white rounded shadow p-6">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-bold text-gray-800">Registro de Actividades</h2>
-            <button class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded text-sm">
+            <button class="text-white font-semibold px-6 py-2 rounded text-sm" style="background-color: #075547;">
                 + Nuevo Registro
             </button>
         </div>

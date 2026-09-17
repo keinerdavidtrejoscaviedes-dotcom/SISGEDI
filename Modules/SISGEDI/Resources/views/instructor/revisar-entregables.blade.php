@@ -124,7 +124,7 @@
                     <!-- Botón Aprobar -->
                     <form action="{{ route('sisgedi.instructor.approvals.approve', $approval->id) }}" method="POST" class="mb-3">
                         @csrf
-                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded flex items-center justify-center space-x-2" onclick="return confirm('¿Deseas aprobar este entregable y firmarlo?')">
+                        <button type="submit" class="w-full text-white font-bold py-3 px-6 rounded flex items-center justify-center space-x-2" style="background-color: #075547; hover: #075547;" onclick="return confirm('¿Deseas aprobar este entregable y firmarlo?')">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
@@ -133,12 +133,12 @@
                     </form>
 
                     <!-- Botón Rechazar con Feedback -->
-                    <button type="button" onclick="toggleRejectForm()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded">
+                    <button type="button" onclick="toggleRejectForm()" class="w-full text-white font-bold py-3 px-6 rounded" style="background-color: #075547;">
                         ✕ Rechazar Entregable
                     </button>
 
                     <!-- Formulario de Rechazo (oculto) -->
-                    <div id="rejectForm" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded">
+                    <div id="rejectForm" class="hidden mt-4 p-4 border rounded" style="background-color: #f0f9f7; border-color: #075547;">
                         <form action="{{ route('sisgedi.instructor.approvals.reject', $approval->id) }}" method="POST" class="space-y-4">
                             @csrf
                             <div>
@@ -147,7 +147,7 @@
                                 <p class="text-xs text-gray-500 mt-1">Mínimo 10 caracteres, máximo 500.</p>
                             </div>
                             <div class="flex space-x-3">
-                                <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                <button type="submit" class="flex-1 text-white font-bold py-2 px-4 rounded" style="background-color: #075547;">
                                     Confirmar Rechazo
                                 </button>
                                 <button type="button" onclick="toggleRejectForm()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">

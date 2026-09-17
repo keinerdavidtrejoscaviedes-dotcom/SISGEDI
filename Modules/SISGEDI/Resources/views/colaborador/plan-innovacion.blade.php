@@ -51,7 +51,7 @@
     <div class="bg-white rounded-lg shadow p-8 mb-8">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-2xl font-bold text-gray-800">Actividades del Plan (mínimo 3)</h2>
-            <button class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded">
+            <button class="text-white font-semibold px-6 py-2 rounded" style="background-color: #075547;">
                 + Agregar Actividad
             </button>
         </div>
@@ -147,12 +147,12 @@
                 El inventario coincide con lo entregado en el empalme:
             </p>
             <div class="space-y-3">
-                <div class="flex items-center p-3 bg-green-50 rounded border border-green-200">
-                    <input type="checkbox" checked disabled class="w-4 h-4 text-green-600 rounded mr-3">
+                <div class="flex items-center p-3 rounded border" style="background-color: #f0f9f7; border-color: #075547;">
+                    <input type="checkbox" checked disabled class="w-4 h-4 rounded mr-3" style="accent-color: #075547;">
                     <label class="text-sm font-medium text-gray-800">Equipos y herramientas</label>
                 </div>
-                <div class="flex items-center p-3 bg-green-50 rounded border border-green-200">
-                    <input type="checkbox" checked disabled class="w-4 h-4 text-green-600 rounded mr-3">
+                <div class="flex items-center p-3 rounded border" style="background-color: #f0f9f7; border-color: #075547;">
+                    <input type="checkbox" checked disabled class="w-4 h-4 rounded mr-3" style="accent-color: #075547;">
                     <label class="text-sm font-medium text-gray-800">Materiales de consumo</label>
                 </div>
                 <div class="flex items-center p-3 bg-yellow-50 rounded border border-yellow-200">
@@ -186,7 +186,7 @@
 
     <!-- Botones de acción -->
     <div class="flex space-x-4">
-        <button class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded">
+        <button class="flex-1 text-white font-bold py-3 px-6 rounded" style="background-color: #075547;">
             Guardar Plan
         </button>
         <button class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded">

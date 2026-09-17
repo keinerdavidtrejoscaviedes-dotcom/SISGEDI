@@ -47,7 +47,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">PDF/Imagen</td>
                         <td class="px-6 py-4">
-                            <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Cargado</span>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold text-white" style="background-color: #075547;">Cargado</span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">15 Ago 2026</td>
                         <td class="px-6 py-4">
@@ -63,7 +63,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">PDF</td>
                         <td class="px-6 py-4">
-                            <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Cargado</span>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold text-white" style="background-color: #075547;">Cargado</span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">15 Ago 2026</td>
                         <td class="px-6 py-4">
@@ -79,7 +79,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">ZIP (Imágenes)</td>
                         <td class="px-6 py-4">
-                            <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Cargado</span>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold text-white" style="background-color: #075547;">Cargado</span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">20 Ago 2026</td>
                         <td class="px-6 py-4">
@@ -99,7 +99,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">—</td>
                         <td class="px-6 py-4">
-                            <button class="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-4 py-2 rounded">Cargar</button>
+                            <button class="text-white text-xs font-semibold px-4 py-2 rounded" style="background-color: #075547;">Cargar</button>
                         </td>
                     </tr>
 
@@ -127,7 +127,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">PDF</td>
                         <td class="px-6 py-4">
-                            <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Cargado</span>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold text-white" style="background-color: #075547;">Cargado</span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">10 Ago 2026</td>
                         <td class="px-6 py-4">
@@ -143,7 +143,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">PDF</td>
                         <td class="px-6 py-4">
-                            <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Cargado</span>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold text-white" style="background-color: #075547;">Cargado</span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">12 Ago 2026</td>
                         <td class="px-6 py-4">
@@ -163,7 +163,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">—</td>
                         <td class="px-6 py-4">
-                            <button class="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-4 py-2 rounded">Cargar</button>
+                            <button class="text-white text-xs font-semibold px-4 py-2 rounded" style="background-color: #075547;">Cargar</button>
                         </td>
                     </tr>
 
@@ -175,7 +175,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">PDF</td>
                         <td class="px-6 py-4">
-                            <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded text-xs font-semibold">Cargado</span>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold text-white" style="background-color: #075547;">Cargado</span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">01 Ago 2026</td>
                         <td class="px-6 py-4">
@@ -195,7 +195,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">—</td>
                         <td class="px-6 py-4">
-                            <button class="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-4 py-2 rounded">Cargar</button>
+                            <button class="text-white text-xs font-semibold px-4 py-2 rounded" style="background-color: #075547;">Cargar</button>
                         </td>
                     </tr>
 
@@ -211,7 +211,7 @@
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">—</td>
                         <td class="px-6 py-4">
-                            <button class="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-4 py-2 rounded">Cargar</button>
+                            <button class="text-white text-xs font-semibold px-4 py-2 rounded" style="background-color: #075547;">Cargar</button>
                         </td>
                     </tr>
                 </tbody>

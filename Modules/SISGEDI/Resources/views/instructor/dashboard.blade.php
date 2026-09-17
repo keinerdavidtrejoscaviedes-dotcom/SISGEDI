@@ -95,7 +95,7 @@
                                         —
                                     @endif
                                 </p>
-                                <a href="{{ route('sisgedi.instructor.revisar-entregables', ['approval' => $approval->id]) }}" class="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded font-semibold inline-block">
+                                <a href="{{ route('sisgedi.instructor.revisar-entregables', ['approval' => $approval->id]) }}" class="text-white text-xs px-3 py-1 rounded font-semibold inline-block" style="background-color: #075547;">
                                     Revisar
                                 </a>
                             </div>
