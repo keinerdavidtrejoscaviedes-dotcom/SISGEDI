@@ -286,27 +286,41 @@ class ConvocatoriaController extends Controller
                 ->with('info', 'La convocatoria no existe o ya fue eliminada.');
         }
 
-        // IDs de postulaciones de esta convocatoria (necesarios para limpiar sus hijos)
-        $postulacionIds = DB::table('postulacion')
-            ->where('convocatoria_id', $id)
-            ->pluck('postulacion_id');
+        DB::transaction(function () use ($id) {
+            // IDs de postulaciones de esta convocatoria (necesarios para limpiar sus hijos)
+            $postulacionIds = DB::table('postulacion')
+                ->where('convocatoria_id', $id)
+                ->pluck('postulacion_id');
 
-        if ($postulacionIds->isNotEmpty()) {
-            // Tablas hijas de postulacion (todas las FK apuntan aquí con NO ACTION)
-            DB::table('documento_postulacion')
-                ->whereIn('postulacion_id', $postulacionIds)->delete();
-            DB::table('prueba_psicotecnica')
-                ->whereIn('postulacion_id', $postulacionIds)->delete();
-            DB::table('resultado_seleccion')
-                ->whereIn('postulacion_id', $postulacionIds)->delete();
-            DB::table('postulacion_opcion_cargo')
-                ->whereIn('postulacion_id', $postulacionIds)->delete();
-        }
+            if ($postulacionIds->isNotEmpty()) {
+                // IDs de entrevistas de esas postulaciones (tienen su propia tabla hija)
+                $entrevistaIds = DB::table('entrevista')
+                    ->whereIn('postulacion_id', $postulacionIds)
+                    ->pluck('entrevista_id');
 
-        // Eliminar en orden respetando las FK (NO ACTION = sin cascada automática)
-        DB::table('postulacion')->where('convocatoria_id', $id)->delete();
-        DB::table('convocatoria_cargo')->where('convocatoria_id', $id)->delete();
-        DB::table('convocatoria')->where('convocatoria_id', $id)->delete();
+                if ($entrevistaIds->isNotEmpty()) {
+                    DB::table('calificacion_item_entrevista')
+                        ->whereIn('entrevista_id', $entrevistaIds)->delete();
+                }
+                DB::table('entrevista')
+                    ->whereIn('postulacion_id', $postulacionIds)->delete();
+
+                // Tablas hijas de postulacion (todas las FK apuntan aquí con NO ACTION)
+                DB::table('documento_postulacion')
+                    ->whereIn('postulacion_id', $postulacionIds)->delete();
+                DB::table('prueba_psicotecnica')
+                    ->whereIn('postulacion_id', $postulacionIds)->delete();
+                DB::table('resultado_seleccion')
+                    ->whereIn('postulacion_id', $postulacionIds)->delete();
+                DB::table('postulacion_opcion_cargo')
+                    ->whereIn('postulacion_id', $postulacionIds)->delete();
+            }
+
+            // Eliminar en orden respetando las FK (NO ACTION = sin cascada automática)
+            DB::table('postulacion')->where('convocatoria_id', $id)->delete();
+            DB::table('convocatoria_cargo')->where('convocatoria_id', $id)->delete();
+            DB::table('convocatoria')->where('convocatoria_id', $id)->delete();
+        });
 
         return redirect()->route('sisgedi.convocatorias.index')
             ->with('success', 'Convocatoria "' . $conv->titulo . '" eliminada correctamente.');
