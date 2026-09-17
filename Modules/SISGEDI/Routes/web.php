@@ -10,6 +10,7 @@ use Modules\SISGEDI\Http\Controllers\GerenteComercialController;
 use Modules\SISGEDI\Http\Controllers\GerenteDashboardController;
 use Modules\SISGEDI\Http\Controllers\GerentePlanTrabajoController;
 use Modules\SISGEDI\Http\Controllers\GerenteTareaController;
+use Modules\SISGEDI\Http\Controllers\PerfilController;
 use Modules\SISGEDI\Http\Controllers\PlanTrabajoController;
 use Modules\SISGEDI\Http\Controllers\PostulacionController;
 
@@ -20,6 +21,7 @@ Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
         Route::post('/producto', [GerenteComercialController::class, 'storeProducto'])->name('producto.store');
         Route::put('/producto/{id}', [GerenteComercialController::class, 'updateProducto'])->name('producto.update');
         Route::delete('/producto/{id}', [GerenteComercialController::class, 'destroyProducto'])->name('producto.destroy');
+        Route::patch('/producto/{id}/activar', [GerenteComercialController::class, 'activarProducto'])->name('producto.activar');
         Route::get('/dashboard', [GerenteComercialController::class, 'dasboardComercial'])->name('dashboard');
     });
 
@@ -31,6 +33,9 @@ Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
 
     // ── Dashboard (admin / gestor) ────────────────────────────────
     Route::get('/dashboard', [DocumentoController::class, 'dashboard'])->name('dashboard');
+
+    // ── Perfil del usuario con sesión SISGEDI ──────────────────────
+    Route::get('/perfil', [PerfilController::class, 'show'])->name('perfil');
 
     // ── Plan de trabajo de la fase (RN-028: visible para todos los roles) ──
     Route::get('/plan-trabajo', [PlanTrabajoController::class, 'show'])->name('plan-trabajo.show');

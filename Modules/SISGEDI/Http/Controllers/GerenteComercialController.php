@@ -178,6 +178,14 @@ class GerenteComercialController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function activarProducto($id)
+    {
+        $producto = ProductoPortafolio::findOrFail($id);
+        $producto->update(['estado' => 'activo']);
+
+        return response()->json(['success' => true]);
+    }
+
     // --- Funciones auxiliares para mapear ENUMS ---
     
     private function getOrigenString($tipoEnum)

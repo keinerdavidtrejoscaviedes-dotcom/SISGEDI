@@ -157,7 +157,7 @@
                                 <p class="text-xs text-slate-400 font-medium">Sesión activa</p>
                                 <p class="text-sm font-bold text-slate-800 truncate">{{ session('sisgedi_user')['rol'] ?? 'Gerente Comercial' }}</p>
                             </div>
-                            <a href="" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                            <a href="{{ route('sisgedi.perfil') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                                 <i class="fas fa-user-cog text-slate-400"></i> Mi Perfil
                             </a>
                             <a href="{{ route('sisgedi.index') }}" target="_blank" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">

@@ -60,12 +60,12 @@
                     </div>
                 </div>
 
-                @auth
+                @if(session('sisgedi_user'))
                 <a href="{{ route('sisgedi.gerente.dashboard') }}"
                    class="nav-link-top {{ Route::is('sisgedi.gerente.*') ? 'nav-active' : '' }}">
                     <i class="fas fa-code-branch text-xs"></i> Panel Gerente
                 </a>
-                @endauth
+                @endif
 
                 <a href="{{ route('home') }}" class="nav-link-top">
                     <i class="fas fa-th-large text-xs"></i> SICEFA
@@ -90,7 +90,8 @@
                 </a>
 
                 {{-- Usuario --}}
-                @auth
+                @if(session('sisgedi_user'))
+                @php $sesionNav = session('sisgedi_user'); @endphp
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open"
                             class="flex items-center gap-2 px-2 py-1.5 rounded-full
@@ -99,14 +100,14 @@
                                     text-white text-xs font-bold flex-shrink-0"
                              style="background: linear-gradient(135deg,#39A900,#002336);
                                     box-shadow: 0 2px 8px rgba(57,169,0,0.4);">
-                            {{ strtoupper(substr(Auth::user()->nickname ?? Auth::user()->name, 0, 2)) }}
+                            {{ strtoupper(substr($sesionNav['nombre'] ?? 'US', 0, 2)) }}
                         </div>
                         <div class="hidden md:block text-left">
                             <p class="text-white text-xs font-semibold leading-none">
-                                {{ Str::limit(Auth::user()->nickname ?? Auth::user()->name, 14) }}
+                                {{ Str::limit($sesionNav['nombre'] ?? 'Usuario', 14) }}
                             </p>
                             <p class="text-[10px] leading-none mt-0.5" style="color:#62E31D;">
-                                {{ Auth::user()->roles->first()?->name ?? 'Sin rol' }}
+                                {{ $sesionNav['rol'] ?? 'Sin rol' }}
                             </p>
                         </div>
                         <i class="fas fa-chevron-down text-white/40 text-[10px] hidden md:block
@@ -127,13 +128,18 @@
                                 box-shadow:0 12px 32px rgba(0,0,0,0.45);">
                         <div class="px-4 py-2.5 border-b" style="border-color:rgba(255,255,255,0.08);">
                             <p class="font-semibold text-white text-sm truncate">
-                                {{ Auth::user()->person->first_name ?? Auth::user()->name }}
+                                {{ ucwords(str_replace('.', ' ', $sesionNav['nombre'] ?? 'Usuario')) }}
                             </p>
                             <p class="text-white/40 text-xs truncate mt-0.5">
-                                {{ Auth::user()->email }}
+                                {{ $sesionNav['correo'] ?? '' }}
                             </p>
                         </div>
-                        <a href="{{ route('logout') }}"
+                        <a href="{{ route('sisgedi.perfil') }}"
+                           class="flex items-center gap-2 px-4 py-2.5 text-white/80 text-sm
+                                  transition-colors hover:bg-white/10">
+                            <i class="fas fa-user-cog text-xs"></i> Mi Perfil
+                        </a>
+                        <a href="{{ route('sisgedi.logout') }}"
                            onclick="event.preventDefault();
                                     document.getElementById('sisgedi-logout').submit();"
                            class="flex items-center gap-2 px-4 py-2.5 text-red-400 text-sm
@@ -142,11 +148,11 @@
                         </a>
                     </div>
                 </div>
-                <form id="sisgedi-logout" action="{{ route('logout') }}"
+                <form id="sisgedi-logout" action="{{ route('sisgedi.logout') }}"
                       method="POST" class="hidden">@csrf</form>
 
                 @else
-                <a href="{{ route('login') }}"
+                <a href="{{ route('sisgedi.login') }}"
                    class="inline-flex items-center gap-1.5 text-sm font-semibold
                           transition-colors"
                    style="color:#39A900;"
@@ -154,7 +160,7 @@
                    onmouseout="this.style.color='#39A900'">
                     <i class="fas fa-sign-in-alt text-xs"></i> Iniciar sesión
                 </a>
-                @endauth
+                @endif
 
                 {{-- Hamburger móvil --}}
                 <button onclick="toggleMobileMenu()"
@@ -182,16 +188,19 @@
             <a href="{{ route('home') }}" class="mobile-link-top">
                 <i class="fas fa-th-large w-5"></i> Volver a SICEFA
             </a>
-            @auth
+            @if(session('sisgedi_user'))
             <div class="pt-2 mt-2" style="border-top:1px solid rgba(255,255,255,0.08);">
-                <a href="{{ route('logout') }}"
+                <a href="{{ route('sisgedi.perfil') }}" class="mobile-link-top">
+                    <i class="fas fa-user-cog w-5"></i> Mi Perfil
+                </a>
+                <a href="{{ route('sisgedi.logout') }}"
                    onclick="event.preventDefault();
                             document.getElementById('sisgedi-logout').submit();"
                    class="mobile-link-top text-red-400">
                     <i class="fas fa-sign-out-alt w-5"></i> Cerrar sesión
                 </a>
             </div>
-            @endauth
+            @endif
         </div>
     </div>
 

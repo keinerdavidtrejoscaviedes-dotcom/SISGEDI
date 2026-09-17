@@ -13,6 +13,14 @@ class DocumentoController extends Controller
     // ── 1. PÁGINA PRINCIPAL — landing institucional ───────────────────
     public function index()
     {
+        // Si ya hay una sesión SISGEDI activa, no volver a mostrar el login:
+        // llevar directo al panel que le corresponde a su rol.
+        $sesion = session('sisgedi_user');
+        if ($sesion) {
+            return app(AuthSisgediController::class)
+                ->redirectPorRol($sesion['id_rol'] ?? null, $sesion['rol'] ?? null, $sesion['nombre'] ?? 'Usuario');
+        }
+
         $totalDocumentos   = Documento::count();
         $documentosActivos = Documento::where('estado', 'Activo')->count();
 

@@ -82,8 +82,11 @@
                     <button @click="openModal('edit', producto)" class="text-slate-500 hover:text-blue-600 bg-white border border-slate-200 hover:border-blue-200 transition-all px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-semibold shadow-sm">
                         <i class="fas fa-edit"></i> Editar
                     </button>
-                    <button @click="confirmDelete(producto)" class="text-slate-500 hover:text-rose-600 bg-white border border-slate-200 hover:border-rose-200 transition-all px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-semibold shadow-sm">
+                    <button x-show="producto.estado === 'Activo'" @click="confirmDelete(producto)" class="text-slate-500 hover:text-rose-600 bg-white border border-slate-200 hover:border-rose-200 transition-all px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-semibold shadow-sm">
                         <i class="fas fa-power-off"></i> Desactivar
+                    </button>
+                    <button x-show="producto.estado !== 'Activo'" @click="activarProducto(producto)" class="text-slate-500 hover:text-emerald-600 bg-white border border-slate-200 hover:border-emerald-200 transition-all px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-semibold shadow-sm" :disabled="loading">
+                        <i class="fas fa-power-off"></i> Activar
                     </button>
                 </div>
             </div>
@@ -399,6 +402,36 @@
                         this.isDeleteModalOpen = false;
                     } else {
                         alert("No se pudo desactivar el producto.");
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert("Error de conexión al servidor.");
+                } finally {
+                    this.loading = false;
+                }
+            },
+
+            async activarProducto(producto) {
+                this.loading = true;
+                const url = `{{ url('/sisgedi/comercial/producto') }}/${producto.id}/activar`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const index = this.productos.findIndex(p => p.id === producto.id);
+                        if (index !== -1) {
+                            this.productos[index].estado = 'Activo';
+                        }
+                    } else {
+                        alert("No se pudo activar el producto.");
                     }
                 } catch (error) {
                     console.error('Error:', error);

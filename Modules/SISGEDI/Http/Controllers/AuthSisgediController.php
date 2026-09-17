@@ -77,8 +77,10 @@ class AuthSisgediController extends Controller
 
     /**
      * Redirecciona al dashboard correspondiente según el rol del usuario en SISGEDI.
+     * Público para que otros controladores (p. ej. al detectar una sesión ya
+     * activa) puedan reutilizar la misma lógica sin duplicarla.
      */
-    private function redirectPorRol($idRol, $rolNombre, $usuarioNombre)
+    public function redirectPorRol($idRol, $rolNombre, $usuarioNombre)
     {
         $rolLower = mb_strtolower(trim($rolNombre ?? ''));
 

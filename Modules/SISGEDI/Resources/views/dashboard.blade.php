@@ -37,27 +37,40 @@
                         @endif
                     </button>
                 </div>
-                {{-- Avatar usuario + botón logout --}}
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
-                         style="background:linear-gradient(135deg,#39A900,#002336);">
-                        {{ strtoupper(substr($usuario['nombre'] ?? 'US', 0, 2)) }}
+                {{-- Avatar usuario + menú de perfil --}}
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false"
+                            class="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-gray-50 transition-colors">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                             style="background:linear-gradient(135deg,#39A900,#002336);">
+                            {{ strtoupper(substr($usuario['nombre'] ?? 'US', 0, 2)) }}
+                        </div>
+                        <div class="hidden sm:block text-left">
+                            <p class="text-xs font-semibold text-gray-800 leading-none">
+                                {{ ucwords(str_replace('.', ' ', $usuario['nombre'] ?? 'Usuario')) }}
+                            </p>
+                            <p class="text-[10px] text-gray-400 leading-none mt-0.5">
+                                {{ $usuario['rol'] ?? 'Sin rol' }}
+                            </p>
+                        </div>
+                        <i class="fas fa-chevron-down text-[10px] text-gray-400 hidden sm:block"></i>
+                    </button>
+
+                    <div x-show="open" x-cloak x-transition
+                         class="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-50">
+                        <a href="{{ route('sisgedi.perfil') }}"
+                           class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-user-cog text-gray-400 w-4"></i> Mi Perfil
+                        </a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <form action="{{ route('sisgedi.logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                    class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                <i class="fas fa-sign-out-alt w-4"></i> Cerrar Sesión
+                            </button>
+                        </form>
                     </div>
-                    <div class="hidden sm:block">
-                        <p class="text-xs font-semibold text-gray-800 leading-none">
-                            {{ ucwords(str_replace('.', ' ', $usuario['nombre'] ?? 'Usuario')) }}
-                        </p>
-                        <p class="text-[10px] text-gray-400 leading-none mt-0.5">
-                            {{ $usuario['rol'] ?? 'Sin rol' }}
-                        </p>
-                    </div>
-                    <form action="{{ route('sisgedi.logout') }}" method="POST" class="inline ml-1">
-                        @csrf
-                        <button type="submit" title="Cerrar sesión"
-                                class="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors">
-                            <i class="fas fa-sign-out-alt text-sm"></i>
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
