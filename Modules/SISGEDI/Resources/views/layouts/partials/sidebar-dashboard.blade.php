@@ -2,6 +2,13 @@
     $sesion   = session('sisgedi_user');
     // Verificar si existen fases en la BD para mostrar/ocultar el módulo de convocatorias
     $hayFases = \Illuminate\Support\Facades\DB::table('fase')->exists();
+
+    // Fase activa (RN-010): mientras exista una fase con estado "Activa",
+    // se oculta la opción de "Crear Fase" en el menú.
+    \Modules\SISGEDI\Http\Controllers\FaseController::sincronizarEstados();
+    $faseVigenteSidebar = \Illuminate\Support\Facades\DB::getSchemaBuilder()->hasColumn('fase', 'estado')
+        ? \Illuminate\Support\Facades\DB::table('fase')->where('estado', 'Activa')->first()
+        : null;
 @endphp
 
 {{-- Overlay móvil --}}
@@ -79,10 +86,12 @@
                    class="sb-sub {{ Route::is('sisgedi.fases.index') ? 'sb-sub-active' : '' }}">
                     Listado de Fases
                 </a>
+                @if(! $faseVigenteSidebar)
                 <a href="{{ route('sisgedi.fases.create') }}"
                    class="sb-sub {{ Route::is('sisgedi.fases.create') ? 'sb-sub-active' : '' }}">
                     Crear Fase
                 </a>
+                @endif
             </div>
         </div>
 
