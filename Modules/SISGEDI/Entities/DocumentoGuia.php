@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DocumentoGuia extends Model
 {
-    protected $table = 'sisgedi_documentos_guia';
+    protected $table = 'documentos_guia';
+    protected $primaryKey = 'documento_guia_id';
 
     protected $fillable = [
         'tarea_id',
@@ -15,9 +16,4 @@ class DocumentoGuia extends Model
         'plazos',
         'archivo_url',
     ];
-
-    public function tarea()
-    {
-        return $this->belongsTo(Tarea::class, 'tarea_id');
-    }
 }

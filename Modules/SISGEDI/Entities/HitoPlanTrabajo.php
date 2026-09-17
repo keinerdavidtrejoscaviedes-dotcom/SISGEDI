@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class HitoPlanTrabajo extends Model
 {
-    protected $table = 'sisgedi_hitos_plan_trabajo';
+    protected $table = 'hitos_plan_trabajo';
+    protected $primaryKey = 'hito_id';
 
     protected $fillable = [
         'plan_trabajo_id',
@@ -21,6 +22,6 @@ class HitoPlanTrabajo extends Model
 
     public function planTrabajo()
     {
-        return $this->belongsTo(PlanTrabajo::class, 'plan_trabajo_id');
+        return $this->belongsTo(PlanTrabajo::class, 'plan_trabajo_id', 'plan_trabajo_id');
     }
 }

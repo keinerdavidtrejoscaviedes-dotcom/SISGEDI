@@ -3,13 +3,11 @@
 namespace Modules\SISGEDI\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Modules\SISGEDI\Entities\Fase;
-use Modules\SISGEDI\Entities\UsuarioRol;
+use Illuminate\Support\Str;
 
 class AuthSisgediController extends Controller
 {
@@ -62,7 +60,8 @@ class AuthSisgediController extends Controller
             ->where('id_rol', $usuario->id_rol)
             ->value('nombre');
 
-        // Guardar sesión propia de SISGEDI (compatibilidad con lo ya existente)
+        // Guardar sesión propia de SISGEDI (compatibilidad con lo ya existente,
+        // no toca el guard Auth de Laravel)
         Session::put('sisgedi_user', [
             'id'     => $usuario->id_users,
             'nombre' => $usuario->nombre,
@@ -83,6 +82,7 @@ class AuthSisgediController extends Controller
     public function redirectPorRol($idRol, $rolNombre, $usuarioNombre)
     {
         $rolLower = mb_strtolower(trim($rolNombre ?? ''));
+        $rolAscii = Str::ascii($rolLower);
 
         // 1. Aprendiz (id_rol = 27) -> Panel del Aprendiz (Convocatorias y postulaciones)
         if ($idRol == 27 || $rolLower === 'aprendiz') {
@@ -102,18 +102,38 @@ class AuthSisgediController extends Controller
                 ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
         }
 
-        // 4. Administrador (26), Gerente General (1), Gerente de Producción (3),
-        //    Gestores, Líderes y Colaborador -> Dashboard Principal
+        // 4. Gestor (Gestor Talento Humano, Gestor ASIG, etc.) -> Dashboard del Gestor
+        if (Str::startsWith($rolAscii, 'gestor.') || Str::startsWith($rolAscii, 'gestor ')) {
+            return redirect()->route('sisgedi.dashboard.gestor')
+                ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
+        }
+
+        // 5. Líder (Líder Equipo Talento, Líder Equipo SIG, etc.) -> Dashboard del Líder
+        if (Str::startsWith($rolAscii, 'lider ')) {
+            return redirect()->route('sisgedi.dashboard.lider')
+                ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
+        }
+
+        // 6. Administrador (26), Gerente General (1), Gerente de Producción (3),
+        //    Colaborador -> Dashboard Principal
         return redirect()->route('sisgedi.dashboard')
             ->with('success', '¡Bienvenido(a), ' . $usuarioNombre . '!');
     }
 
     /**
-     * Cierra la sesión de SISGEDI.
+     * Cierra la sesión de SISGEDI y redirige al index.
      */
     public function logout(Request $request)
     {
         Session::forget('sisgedi_user');
+        Session::flush();
+
+        if ($request->wantsJson() || $request->ajax() || $request->header('X-Beacon')) {
+            return response()->json([
+                'status'   => 'logged_out',
+                'redirect' => route('sisgedi.index')
+            ]);
+        }
 
         if (Auth::check()) {
             Auth::logout();
