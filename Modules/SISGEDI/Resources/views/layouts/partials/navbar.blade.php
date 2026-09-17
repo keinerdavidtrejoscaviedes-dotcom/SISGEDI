@@ -60,7 +60,6 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
                 @auth
                 <a href="{{ route('sisgedi.gerente.dashboard') }}"
                    class="nav-link-top {{ Route::is('sisgedi.gerente.*') ? 'nav-active' : '' }}">
@@ -68,8 +67,6 @@
                 </a>
                 @endauth
 
-=======
->>>>>>> origin/maicolbc
                 <a href="{{ route('home') }}" class="nav-link-top">
                     <i class="fas fa-th-large text-xs"></i> SICEFA
                 </a>

@@ -74,11 +74,7 @@
 
             {{-- ── Columna derecha: card de inicio de sesión ── --}}
             <div class="flex justify-end">
-<<<<<<< HEAD
                 <div id="cardLogin" class="w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300"
-=======
-                <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden"
->>>>>>> origin/maicolbc
                      style="border: 1px solid rgba(0,0,0,.06);">
 
                     {{-- Header de la card --}}
@@ -176,7 +172,6 @@
                             Ingresar
                         </button>
 
-<<<<<<< HEAD
                         {{-- Acceso rápido — solo Aprendiz --}}
                         <div class="mt-4 p-3 rounded-xl text-center"
                              style="background:#f0fdf4; border:1px solid #bbf7d0;">
@@ -196,8 +191,6 @@
                             </button>
                         </div>
 
-=======
->>>>>>> origin/maicolbc
                         {{-- Separador --}}
                         <div class="flex items-center gap-3 my-4">
                             <div class="flex-1 h-px bg-gray-200"></div>
@@ -492,7 +485,6 @@
 @endsection
 
 @section('scripts')
-<<<<<<< HEAD
 {{-- Formulario oculto para acceso rápido del aprendiz — FUERA de cualquier otro form --}}
 <form id="formAprendizRapido"
       action="{{ route('sisgedi.login.post') }}"
@@ -508,9 +500,6 @@
         document.getElementById('formAprendizRapido').submit();
     }
 
-=======
-<script>
->>>>>>> origin/maicolbc
     function togglePassword() {
         const f = document.getElementById('passwordField');
         const e = document.getElementById('eyeIcon');
