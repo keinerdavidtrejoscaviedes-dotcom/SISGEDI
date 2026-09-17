@@ -13,10 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome 6 -->
-    <link href="{{ asset('libs/Fontawesome6/css/fontawesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/Fontawesome6/css/solid.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/Fontawesome6/css/brands.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/Fontawesome6/css/v5-font-face.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -133,7 +130,6 @@
                           hover:bg-sena-green-l">
                     <i class="fas fa-th-large text-xs"></i> Módulos
                 </a>
-<<<<<<< HEAD
 
                 @if(!empty($hayConvocatoriaActiva) || (\Illuminate\Support\Facades\DB::table('convocatoria')->where('estado', 'abierta')->exists()))
                 {{-- Menú Convocatoria (sólo visible cuando hay convocatoria activa) --}}
@@ -150,8 +146,6 @@
                 </a>
                 @endif
 
-=======
->>>>>>> origin/maicolbc
                 <a href="#roles"
                    class="flex items-center gap-1.5 px-3 py-2 text-sm font-medium
                           text-gray-600 hover:text-sena-green transition-colors rounded-lg
@@ -200,7 +194,6 @@
                       text-gray-600 hover:bg-sena-green-l hover:text-sena-green transition-colors">
                 <i class="fas fa-th-large text-xs w-4"></i> Módulos
             </a>
-<<<<<<< HEAD
             @if(!empty($hayConvocatoriaActiva) || (\Illuminate\Support\Facades\DB::table('convocatoria')->where('estado', 'abierta')->exists()))
             <a href="#cardLogin"
                onclick="focusLoginCard(event)"
@@ -208,8 +201,6 @@
                 <i class="fas fa-bullhorn text-xs w-4 text-green-600"></i> Convocatorias
             </a>
             @endif
-=======
->>>>>>> origin/maicolbc
             <a href="{{ route('home') }}"
                class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium
                       text-gray-600 hover:bg-sena-green-l hover:text-sena-green transition-colors">
@@ -281,7 +272,6 @@
 
 <!-- jQuery -->
 <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
-<<<<<<< HEAD
 <script>
 function focusLoginCard(e) {
     var card = document.getElementById('cardLogin');
@@ -297,8 +287,6 @@ function focusLoginCard(e) {
     }
 }
 </script>
-=======
->>>>>>> origin/maicolbc
 @yield('scripts')
 
 </body>

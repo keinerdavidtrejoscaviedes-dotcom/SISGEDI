@@ -13,13 +13,10 @@
           rel="stylesheet">
 
     <!-- Font Awesome 6 -->
-    <link href="{{ asset('libs/Fontawesome6/css/fontawesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/Fontawesome6/css/solid.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/Fontawesome6/css/brands.css') }}" rel="stylesheet">
-    <link href="{{ asset('libs/Fontawesome6/css/v5-font-face.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
     <!-- Toastr -->
-    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>

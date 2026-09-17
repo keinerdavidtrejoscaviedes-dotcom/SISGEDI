@@ -186,7 +186,6 @@
 @endsection
 
 @section('script')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script>
 function filtrarTarjetas(valor) {
     valor = valor.toLowerCase();
@@ -202,16 +201,28 @@ function filtrarTarjetas(valor) {
 
 function confirmarEliminar(id, titulo) {
     Swal.fire({
-        title: '¿Eliminar convocatoria?',
-        html: 'Se eliminará permanentemente <strong>"' + titulo + '"</strong> junto con todos sus cargos y postulaciones.<br><br>Esta acción <strong>no se puede deshacer</strong>.',
+        title: 'Eliminar convocatoria',
+        html: '¿Seguro que deseas eliminar <strong class="text-gray-800">"' + titulo + '"</strong>?' +
+              '<div class="mt-3 flex items-center gap-2 justify-center text-xs font-semibold text-red-500 bg-red-50 border border-red-100 rounded-lg py-2 px-3">' +
+              '<i class="fas fa-triangle-exclamation"></i> Se eliminará junto con sus cargos y postulaciones. No se puede deshacer</div>',
         icon: 'warning',
+        iconHtml: '<i class="fas fa-trash"></i>',
+        iconColor: '#DC2626',
         showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
+        confirmButtonText: '<i class="fas fa-trash text-xs"></i> Sí, eliminar',
         cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#DC2626',
-        cancelButtonColor: '#6B7280',
         reverseButtons: true,
         focusCancel: true,
+        buttonsStyling: false,
+        customClass: {
+            popup: 'rounded-2xl !shadow-2xl',
+            icon: '!border-red-100 !text-red-500',
+            title: '!text-lg !font-bold !text-gray-800 !pt-1',
+            htmlContainer: '!text-sm !text-gray-500 !mt-1',
+            actions: '!gap-2 !mt-5',
+            confirmButton: 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm transition-colors',
+            cancelButton: 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors',
+        },
     }).then(function(result) {
         if (result.isConfirmed) {
             var form = document.getElementById('formEliminarConvocatoria');
