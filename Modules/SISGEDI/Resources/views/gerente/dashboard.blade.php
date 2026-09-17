@@ -1,4 +1,6 @@
-@extends('sisgedi::layouts.master')
+@extends('sisgedi::layouts.panel')
+
+@section('titulo-topbar', 'Dashboard Principal')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

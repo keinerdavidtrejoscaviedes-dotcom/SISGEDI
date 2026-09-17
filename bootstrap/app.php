@@ -14,7 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         // Alias para el panel exclusivo de gestión de evidencias (solo usuario ID 124)
         $middleware->alias([
             'gestor.evidencias' => \Modules\Evidencias\Http\Middleware\EsGestorEvidencias::class,
-            'rol.sisgedi' => \Modules\SISGEDI\Http\Middleware\EnsureSisgediRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

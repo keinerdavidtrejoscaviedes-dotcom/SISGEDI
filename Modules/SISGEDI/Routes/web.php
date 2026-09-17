@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\SISGEDI\Http\Controllers\DocumentoController;
 use Modules\SISGEDI\Http\Controllers\AuthSisgediController;
 use Modules\SISGEDI\Http\Controllers\GerenteDashboardController;
+use Modules\SISGEDI\Http\Controllers\GerenteInstructorController;
 use Modules\SISGEDI\Http\Controllers\GerentePlanTrabajoController;
 use Modules\SISGEDI\Http\Controllers\GerenteTareaController;
 use Modules\SISGEDI\Http\Controllers\PlanTrabajoController;
@@ -42,5 +43,12 @@ Route::prefix('sisgedi')->name('sisgedi.')->group(function () {
 
             Route::get('/plan-trabajo',  [GerentePlanTrabajoController::class, 'edit'])->name('plan-trabajo.edit');
             Route::post('/plan-trabajo', [GerentePlanTrabajoController::class, 'save'])->name('plan-trabajo.save');
+
+            Route::get('/instructores',                  [GerenteInstructorController::class, 'index'])->name('instructores.index');
+            Route::get('/instructores/crear',             [GerenteInstructorController::class, 'create'])->name('instructores.create');
+            Route::post('/instructores',                  [GerenteInstructorController::class, 'store'])->name('instructores.store');
+            Route::get('/instructores/{instructor}/editar', [GerenteInstructorController::class, 'edit'])->name('instructores.edit');
+            Route::put('/instructores/{instructor}',      [GerenteInstructorController::class, 'update'])->name('instructores.update');
+            Route::delete('/instructores/{instructor}',   [GerenteInstructorController::class, 'destroy'])->name('instructores.destroy');
         });
 });

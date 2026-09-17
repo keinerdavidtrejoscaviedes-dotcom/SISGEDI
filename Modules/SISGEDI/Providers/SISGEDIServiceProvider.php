@@ -4,6 +4,7 @@ namespace Modules\SISGEDI\Providers;
 
 use Nwidart\Modules\Support\ModuleServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
+use Modules\SISGEDI\Http\Middleware\EnsureSisgediRole;
 
 class SISGEDIServiceProvider extends ModuleServiceProvider
 {
@@ -33,6 +34,18 @@ class SISGEDIServiceProvider extends ModuleServiceProvider
         EventServiceProvider::class,
         RouteServiceProvider::class,
     ];
+
+    /**
+     * Registra el alias de middleware propio del modulo aqui, en vez de en
+     * bootstrap/app.php, para no tocar un archivo compartido por todos los
+     * subgrupos del proyecto (evita conflictos al fusionar ramas).
+     */
+    public function boot(): void
+    {
+        parent::boot();
+
+        $this->app['router']->aliasMiddleware('rol.sisgedi', EnsureSisgediRole::class);
+    }
 
     /**
      * Define module schedules.
