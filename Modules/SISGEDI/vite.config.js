@@ -17,7 +17,8 @@ export default defineConfig({
             buildDirectory: 'build-sisgedi',
             input: [
                 __dirname + '/resources/assets/sass/app.scss',
-                __dirname + '/resources/assets/js/app.js'
+                __dirname + '/resources/assets/js/app.js',
+                __dirname + '/resources/assets/css/gestor-dashboard.css'
             ],
             refresh: true,
         }),

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AuthSisgediController extends Controller
 {
@@ -51,6 +52,16 @@ class AuthSisgediController extends Controller
             ->where('id_rol', $usuario->id_rol)
             ->value('nombre');
 
+        $rolNormalizado = Str::ascii(Str::lower(trim((string) $rol)));
+        $esGestor = Str::startsWith($rolNormalizado, 'gestor.') || Str::startsWith($rolNormalizado, 'gestor ');
+        $esLider = Str::startsWith($rolNormalizado, 'lider ');
+
+        if (! $rol || (! $esGestor && ! $esLider)) {
+            return back()
+                ->withInput($request->only('nickname'))
+            ->withErrors(['nickname' => 'Este usuario no tiene un rol de Gestor o Líder habilitado en SISGEDI.']);
+        }
+
         // Guardar sesión propia de SISGEDI (NO toca Auth de Laravel)
         Session::put('sisgedi_user', [
             'id'     => $usuario->id_users,
@@ -60,16 +71,24 @@ class AuthSisgediController extends Controller
             'id_rol' => $usuario->id_rol,
         ]);
 
-        return redirect()->route('sisgedi.dashboard')
+        return redirect()->route($esLider ? 'sisgedi.dashboard.lider' : 'sisgedi.dashboard.gestor')
             ->with('success', '¡Bienvenido, ' . $usuario->nombre . '!');
     }
 
     /**
-     * Cierra la sesión de SISGEDI.
+     * Cierra la sesión de SISGEDI y redirige al index.
      */
     public function logout(Request $request)
     {
         Session::forget('sisgedi_user');
+        Session::flush();
+
+        if ($request->wantsJson() || $request->ajax() || $request->header('X-Beacon')) {
+            return response()->json([
+                'status'   => 'logged_out',
+                'redirect' => route('sisgedi.index')
+            ]);
+        }
 
         return redirect()->route('sisgedi.index')
             ->with('success', 'Sesión cerrada correctamente.');
