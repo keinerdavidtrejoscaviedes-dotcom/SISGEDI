@@ -2,7 +2,6 @@
 
 namespace Modules\SISGEDI\Entities;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,7 +32,7 @@ class Tarea extends Model
 
     public function generador()
     {
-        return $this->belongsTo(User::class, 'generador_usuario_id');
+        return $this->belongsTo(UsuarioSisgedi::class, 'generador_usuario_id', 'id_users');
     }
 
     public function tareaPadre()

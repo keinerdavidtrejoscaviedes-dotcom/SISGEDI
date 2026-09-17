@@ -25,13 +25,19 @@ return new class extends Migration
                 'vencida',
             ])->default('planificada');
             $table->enum('clasificacion', ['general', 'individual', 'cascada'])->default('cascada');
-            $table->foreignId('generador_usuario_id')->constrained('users')->cascadeOnDelete();
+            // `generador_usuario_id` apunta a `users_sisgedi.id_users` (int
+            // con signo, la identidad usada por la sesión de SISGEDI).
+            $table->integer('generador_usuario_id');
             $table->foreignId('tarea_padre_id')->nullable()->constrained('sisgedi_tareas')->nullOnDelete();
             $table->foreignId('sector_id')->constrained('sisgedi_sectores_productivos')->cascadeOnDelete();
-            $table->foreignId('fase_id')->constrained('sisgedi_fases')->cascadeOnDelete();
+            // `fase_id` apunta a la tabla legacy `fase` (bigint con signo).
+            $table->bigInteger('fase_id');
             $table->boolean('confirmada')->default(false);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('generador_usuario_id')->references('id_users')->on('users_sisgedi')->cascadeOnDelete();
+            $table->foreign('fase_id')->references('fase_id')->on('fase')->cascadeOnDelete();
         });
     }
 

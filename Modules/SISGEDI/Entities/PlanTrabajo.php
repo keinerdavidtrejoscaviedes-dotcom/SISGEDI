@@ -2,7 +2,6 @@
 
 namespace Modules\SISGEDI\Entities;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class PlanTrabajo extends Model
@@ -23,7 +22,7 @@ class PlanTrabajo extends Model
 
     public function autor()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(UsuarioSisgedi::class, 'user_id', 'id_users');
     }
 
     public function fase()

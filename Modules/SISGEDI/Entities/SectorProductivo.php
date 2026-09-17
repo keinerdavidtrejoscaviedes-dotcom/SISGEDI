@@ -36,7 +36,7 @@ class SectorProductivo extends Model
     public function scopeActivosEnFase($query, int $faseId)
     {
         return $query->whereHas('fases', function ($q) use ($faseId) {
-            $q->where('sisgedi_fases.id', $faseId)
+            $q->where('fase.fase_id', $faseId)
                 ->where('sisgedi_fase_sector.estado_activo', true);
         });
     }

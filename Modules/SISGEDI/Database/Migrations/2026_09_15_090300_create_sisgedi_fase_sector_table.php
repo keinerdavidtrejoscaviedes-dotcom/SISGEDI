@@ -9,12 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sisgedi_fase_sector', function (Blueprint $table) {
-            $table->foreignId('fase_id')->constrained('sisgedi_fases')->cascadeOnDelete();
+            // `fase_id` apunta a la tabla legacy `fase` (bigint con signo,
+            // no unsigned), por eso no se usa foreignId()/constrained() aquí.
+            $table->bigInteger('fase_id');
             $table->foreignId('sector_id')->constrained('sisgedi_sectores_productivos')->cascadeOnDelete();
             $table->boolean('estado_activo')->default(true);
             $table->timestamps();
 
             $table->primary(['fase_id', 'sector_id']);
+            $table->foreign('fase_id')->references('fase_id')->on('fase')->cascadeOnDelete();
         });
     }
 

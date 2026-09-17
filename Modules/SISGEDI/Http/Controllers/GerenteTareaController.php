@@ -4,7 +4,6 @@ namespace Modules\SISGEDI\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Modules\SISGEDI\Entities\DocumentoGuia;
@@ -20,7 +19,7 @@ class GerenteTareaController extends Controller
     {
         $fase = $request->attributes->get('sisgedi_fase');
 
-        $tareas = Tarea::where('generador_usuario_id', Auth::id())
+        $tareas = Tarea::where('generador_usuario_id', session('sisgedi_user')['id'])
             ->where('fase_id', $fase->id)
             ->with(['sector', 'documentoGuia'])
             ->orderBy('created_at', 'desc')
@@ -99,7 +98,7 @@ class GerenteTareaController extends Controller
                 'tipo_evidencia_requerida' => 'documento',
                 'estado' => 'asignada',
                 'clasificacion' => 'cascada',
-                'generador_usuario_id' => Auth::id(),
+                'generador_usuario_id' => session('sisgedi_user')['id'],
                 'tarea_padre_id' => null,
                 'sector_id' => $validated['sector_id'],
                 'fase_id' => $fase->id,

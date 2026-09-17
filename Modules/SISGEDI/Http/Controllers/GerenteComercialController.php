@@ -12,6 +12,11 @@ class GerenteComercialController extends Controller
 {
     public function dasboardComercial()
     {
+        if (! session('sisgedi_user')) {
+            return redirect()->route('sisgedi.login')
+                ->withErrors(['nickname' => 'Debes iniciar sesión para acceder.']);
+        }
+
         return view('sisgedi::gerente_comercial.dashboard');
     }
 

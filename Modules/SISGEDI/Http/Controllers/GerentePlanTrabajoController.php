@@ -4,7 +4,6 @@ namespace Modules\SISGEDI\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\SISGEDI\Entities\HitoPlanTrabajo;
 use Modules\SISGEDI\Entities\PlanTrabajo;
@@ -49,7 +48,7 @@ class GerentePlanTrabajoController extends Controller
 
         DB::transaction(function () use ($validated, $fase) {
             $plan = PlanTrabajo::updateOrCreate(
-                ['fase_id' => $fase->id, 'nivel' => 'general', 'user_id' => Auth::id()],
+                ['fase_id' => $fase->id, 'nivel' => 'general', 'user_id' => session('sisgedi_user')['id']],
                 ['fecha_publicacion' => now(), 'descripcion' => $validated['descripcion']]
             );
 

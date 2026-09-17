@@ -10,12 +10,17 @@ return new class extends Migration
     {
         Schema::create('sisgedi_planes_trabajo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('fase_id')->constrained('sisgedi_fases')->cascadeOnDelete();
+            // `user_id` apunta a `users_sisgedi.id_users` (int con signo).
+            $table->integer('user_id');
+            // `fase_id` apunta a la tabla legacy `fase` (bigint con signo).
+            $table->bigInteger('fase_id');
             $table->enum('nivel', ['general', 'area', 'equipo'])->default('general');
             $table->dateTime('fecha_publicacion');
             $table->text('descripcion');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id_users')->on('users_sisgedi')->cascadeOnDelete();
+            $table->foreign('fase_id')->references('fase_id')->on('fase')->cascadeOnDelete();
 
             // RN-028: un unico plan por nivel y autor dentro de cada fase
             // (para "general" en la practica es un unico plan por fase, ya

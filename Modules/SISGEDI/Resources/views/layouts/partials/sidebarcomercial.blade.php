@@ -126,7 +126,7 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-semibold text-white truncate">{{ session('sisgedi_user')['nombre'] ?? 'Usuario' }}</p>
-                        <p class="text-xs text-[#39A900] font-medium">Administrador ERP</p>
+                        <p class="text-xs text-[#39A900] font-medium">{{ session('sisgedi_user')['rol'] ?? 'Gerente Comercial' }}</p>
                     </div>
                 </div>
             </div>
@@ -155,16 +155,16 @@
                              class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 transition-all">
                             <div class="px-4 py-3 border-b border-slate-100">
                                 <p class="text-xs text-slate-400 font-medium">Sesión activa</p>
-                                <p class="text-sm font-bold text-slate-800 truncate">Rol ID: {{ session('sisgedi_user')['id_rol'] ?? 'Sin rol' }}</p>
+                                <p class="text-sm font-bold text-slate-800 truncate">{{ session('sisgedi_user')['rol'] ?? 'Gerente Comercial' }}</p>
                             </div>
                             <a href="" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                                 <i class="fas fa-user-cog text-slate-400"></i> Mi Perfil
                             </a>
-                            <a href="{{ url('/') }}" target="_blank" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                                <i class="fas fa-external-link-alt text-slate-400"></i> Ver Sitio Web
+                            <a href="{{ route('sisgedi.index') }}" target="_blank" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                                <i class="fas fa-external-link-alt text-slate-400"></i> Ver Inicio SISGEDI
                             </a>
                             <div class="border-t border-slate-100 my-1"></div>
-                            <form action="{{ route('logout') }}" method="POST">
+                            <form action="{{ route('sisgedi.logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-rose-600 hover:bg-rose-50 transition-colors font-medium">
                                     <i class="fas fa-sign-out-alt"></i> Cerrar Sesión

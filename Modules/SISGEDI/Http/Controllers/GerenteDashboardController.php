@@ -4,7 +4,6 @@ namespace Modules\SISGEDI\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Modules\SISGEDI\Entities\Tarea;
 
 class GerenteDashboardController extends Controller
@@ -18,7 +17,7 @@ class GerenteDashboardController extends Controller
         $fase = $request->attributes->get('sisgedi_fase');
         $usuarioRol = $request->attributes->get('sisgedi_usuario_rol');
 
-        $tareasQuery = Tarea::where('generador_usuario_id', Auth::id())
+        $tareasQuery = Tarea::where('generador_usuario_id', session('sisgedi_user')['id'])
             ->where('fase_id', $fase->id);
 
         $totalTareas = (clone $tareasQuery)->count();
